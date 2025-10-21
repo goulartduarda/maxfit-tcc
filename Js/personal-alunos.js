@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   async function carregarVinculados() {
     try {
-      const resp = await fetch(`http://localhost:3000/api/alunos-do-personal/${personalId}`);
+      resp = await fetch(`https://maxfit-backend.onrender.com/api/alunos-do-personal/${personalId}`);
       const alunos = await resp.json();
       listaAlunos.innerHTML = "";
 
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   async function carregarDisponiveis() {
     try {
-      const resp = await fetch("http://localhost:3000/api/alunos-disponiveis");
+      const resp = await fetch("https://maxfit-backend.onrender.com/api/alunos-disponiveis");
       const alunos = await resp.json();
       listaDisponiveis.innerHTML = "";
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   async function vincularAluno(alunoId) {
     try {
-      const resp = await fetch("http://localhost:3000/api/vincular-aluno", {
+      const resp = await fetch("https://maxfit-backend.onrender.com/api/vincular-aluno", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ alunoId, personalId })
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function removerAluno(alunoId) {
     if (!confirm("Remover este aluno do personal?")) return;
     try {
-      const resp = await fetch(`http://localhost:3000/api/remover-aluno/${alunoId}`, { method: "PUT" });
+      const resp = await fetch(`https://maxfit-backend.onrender.com/api/remover-aluno/${alunoId}`, { method: "PUT" });
       if (resp.ok) {
         alert("Aluno removido!");
         carregarVinculados();

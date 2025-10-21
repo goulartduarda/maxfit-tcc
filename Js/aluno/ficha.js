@@ -1,7 +1,7 @@
 // ===== ficha.js — versão compatível com o backend real =====
 console.log("✅ ficha.js (versão final compatível) carregado");
 
-const API = "http://localhost:3000";
+const API = "https://maxfit-backend.onrender.com";
 const $ = (id) => document.getElementById(id);
 
 function fixVh() {

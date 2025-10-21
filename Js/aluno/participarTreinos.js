@@ -37,7 +37,7 @@ async function carregarDesafios() {
 
   try {
     // Busca TODOS os desafios do banco (não apenas do aluno)
-    const resp = await fetch("http://127.0.0.1:3000/api/desafios");
+    const resp = await fetch(`https://maxfit-backend.onrender.com/api/desafios`);
     if (!resp.ok) throw new Error("Erro ao buscar desafios.");
 
     const desafios = await resp.json();
@@ -106,7 +106,7 @@ function cardHtml(d) {
 // ===== Participar de um desafio (rota real) =====
 async function participarDesafio(id) {
   try {
-    const resp = await fetch(`http://127.0.0.1:3000/api/desafios/${id}/participar`, {
+    const resp = await fetch(`https://maxfit-backend.onrender.com/api/desafios/${id}/participar`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ aluno_id: alunoId }),

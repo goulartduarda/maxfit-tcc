@@ -1,7 +1,7 @@
 // ============================================================
 // personal-cadastro-treino.js — MaxFit 💪
 // ============================================================
-const API = "http://localhost:3000";
+const API = "https://maxfit-backend.onrender.com";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const selectAluno = document.getElementById("aluno");

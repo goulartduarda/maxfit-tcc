@@ -85,7 +85,7 @@ async function salvarEntrada() {
       imagem: img || null
     };
 
-    const resp = await fetch("http://127.0.0.1:3000/api/diarios", {
+    const resp = await fetch("https://maxfit-backend.onrender.com/api/diarios", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
@@ -108,7 +108,7 @@ async function renderHistorico() {
   box.innerHTML = `<div class="item"><div class="item-sub">Carregando...</div></div>`;
 
   try {
-    const resp = await fetch(`http://127.0.0.1:3000/api/diarios/${alunoId}`);
+    const resp = await fetch(`https://maxfit-backend.onrender.com/api/diarios/${alunoId}`);
     if (!resp.ok) throw new Error("Erro ao buscar histórico.");
     const list = await resp.json();
 

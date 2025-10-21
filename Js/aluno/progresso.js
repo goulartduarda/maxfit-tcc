@@ -67,25 +67,25 @@ async function onSubmit(e) {
     };
 
     const url = editingId
-      ? `http://127.0.0.1:3000/api/progresso/${editingId}`
-      : `http://127.0.0.1:3000/api/progresso`;
-    const method = editingId ? "PUT" : "POST";
+    ? `https://maxfit-backend.onrender.com/api/progresso/${editingId}`
+    : `https://maxfit-backend.onrender.com/api/progresso`;
+  const method = editingId ? "PUT" : "POST";
 
-    const resp = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+  const resp = await fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
 
-    if (!resp.ok) throw new Error("Falha ao salvar progresso.");
+  if (!resp.ok) throw new Error("Falha ao salvar progresso.");
 
-    alert("✅ Progresso salvo com sucesso!");
-    resetForm();
-    render();
-  } catch (err) {
-    console.error("Erro:", err);
-    alert("❌ Erro ao conectar com o servidor. Verifique se o backend está rodando.");
-  }
+  alert("✅ Progresso salvo com sucesso!");
+  resetForm();
+  render();
+} catch (err) {
+  console.error("Erro:", err);
+  alert("❌ Erro ao conectar com o servidor.");
+}
 }
 
 // ===== limpar formulário =====
@@ -104,7 +104,7 @@ async function render() {
   $("vazio").hidden = true;
 
   try {
-    const resp = await fetch(`http://127.0.0.1:3000/api/progresso/${alunoId}`);
+    const resp = await fetch(`https://maxfit-backend.onrender.com/api/progresso/${alunoId}`);
     if (!resp.ok) throw new Error();
 
     const list = await resp.json();

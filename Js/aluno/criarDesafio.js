@@ -74,7 +74,7 @@ async function salvarDesafio(e) {
   const body = { aluno_id, titulo, descricao, data_fim };
 
   try {
-    const resp = await fetch("http://127.0.0.1:3000/api/desafios", {
+    const resp = await fetch("https://maxfit-backend.onrender.com/api/desafios", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -96,7 +96,7 @@ async function salvarDesafio(e) {
 // ===== Concluir desafio existente =====
 async function concluirDesafio(id) {
   try {
-    const resp = await fetch(`http://127.0.0.1:3000/api/desafios/${id}/concluir`, {
+    const resp = await fetch(`https://maxfit-backend.onrender.com/api/desafios/${id}/concluir`, {
       method: "PUT",
     });
 

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const resposta = await fetch("http://localhost:3000/api/cadastro", {
+      const resposta = await fetch("https://maxfit-backend.onrender.com/api/cadastro", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, email, senha, tipo }),

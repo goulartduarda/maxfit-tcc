@@ -37,7 +37,7 @@ async function enviarMensagem(e){
   }
 
   try {
-    const resp = await fetch("http://localhost:3000/api/suporte", {
+    const resp = await fetch("https://maxfit-backend.onrender.com/api/suporte", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -69,7 +69,7 @@ async function carregarHistorico(){
   box.innerHTML = "<p>Carregando mensagens...</p>";
 
   try {
-    const resp = await fetch(`http://localhost:3000/api/suporte/${alunoId}`);
+    const resp = await fetch(`https://maxfit-backend.onrender.com/api/suporte/${alunoId}`);
     const list = await resp.json();
 
     if(!Array.isArray(list) || list.length === 0){
