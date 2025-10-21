@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaxFit - Check-in</title>
+  <link rel="stylesheet" href="../style/home-aluno.css"> <!-- mantém identidade -->
+  <style>
+    .checkin-card {
+      background:#17181a;
+      border:1px solid #2a2b2e;
+      border-radius:1rem;
+      padding:1rem;
+      margin-bottom:1rem;
+      color:#e9ecef;
+    }
+    .checkin-card h3 { color:#FF6A00; font-size:1.2rem; }
+    ul { padding-left:1rem; }
+    .btn-checkin {
+      background:#FF6A00;
+      color:#fff;
+      padding:1rem;
+      border-radius:1rem;
+      border:none;
+      width:100%;
+      font-weight:bold;
+      margin-bottom:1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="celular">
+    <div class="container">
+      <h1>Check-in Diário</h1>
+      <button id="btnCheckin" class="btn-checkin">Fazer check-in de hoje</button>
+      <div id="checkinsContainer" class="checkin-card">
+        <h3>Meus check-ins</h3>
+        <ul id="listaCheckins"></ul>
+      </div>
+      <a href="home-aluno.html" class="btn marrom">Voltar</a>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    const emailAluno = localStorage.getItem("current_user_email");
+    const aluno = usuarios.find(u => u.email === emailAluno);
+
+    if (!aluno) {
+      alert("Sessão expirada. Faça login novamente.");
+      window.location.href = "06-entrar.html";
+      return;
+    }
+
+    // Garante que o aluno tenha um array de checkins
+    if (!aluno.checkins) aluno.checkins = [];
+
+    const lista = document.getElementById("listaCheckins");
+    const btnCheckin = document.getElementById("btnCheckin");
+
+    // Função para atualizar a lista na tela
+    function renderCheckins() {
+      lista.innerHTML = "";
+      if (aluno.checkins.length === 0) {
+        lista.innerHTML = "<li class='text-white-50'>Nenhum check-in registrado.</li>";
+        return;
+      }
+      aluno.checkins.slice(-10).reverse().forEach(data => {
+        const li = document.createElement("li");
+        li.textContent = new Date(data).toLocaleDateString("pt-BR");
+        lista.appendChild(li);
+      });
+    }
+
+    renderCheckins();
+
+    // Evento do botão de check-in
+    btnCheckin.addEventListener("click", () => {
+      const hoje = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+      if (aluno.checkins.includes(hoje)) {
+        alert("Você já fez check-in hoje!");
+        return;
+      }
+
+      aluno.checkins.push(hoje);
+
+      // Atualiza no localStorage
+      const idx = usuarios.findIndex(u => u.email === aluno.email);
+      usuarios[idx] = aluno;
+      localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+      alert("Check-in registrado!");
+      renderCheckins();
+    });
+  });
+  </script>
+</body>
+</html>

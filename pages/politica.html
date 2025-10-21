@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Política de Privacidade - Max Fit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #e65c00;
+    }
+    .button-container {
+      margin-top: 40px;
+      text-align: center;
+    }
+    
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      margin: 0 10px;
+      transition: background-color 0.3s;
+    }
+    
+    #aceitarBtn {
+      background-color: #e65c00;
+      color: white;
+    }
+    
+    #recusarBtn {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    #aceitarBtn:hover {
+      background-color: #d15200;
+    }
+
+    #recusarBtn:hover {
+      background-color: #e0e0e0;
+    }
+
+    /* Mensagem de aviso elegante */
+    #mensagem {
+      display: none;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #ffe5e5;
+      color: #b30000;
+      border: 1px solid #ff9999;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Política de Privacidade - Max Fit</h1>
+  <p>
+    O Max Fit respeita sua privacidade e se compromete a proteger as informações pessoais que você compartilha conosco.
+    Esta Política de Privacidade explica como coletamos, usamos e protegemos seus dados.
+  </p>
+
+  <h2>Coleta de Informações</h2>
+  <p>
+    Coletamos informações pessoais, como nome, e-mail e dados de login, apenas quando você as fornece voluntariamente por meio do nosso aplicativo ou site.
+  </p>
+
+  <h2>Uso das Informações</h2>
+  <p>
+    As informações são utilizadas para autenticação, personalização do serviço e comunicação com os usuários.
+  </p>
+
+  <h2>Compartilhamento de Dados</h2>
+  <p>
+    Não vendemos ou compartilhamos suas informações pessoais com terceiros, exceto quando exigido por lei.
+  </p>
+
+  <h2>Segurança</h2>
+  <p>
+    Utilizamos medidas de segurança adequadas para proteger seus dados pessoais contra acesso não autorizado.
+  </p>
+
+  <h2>Contato</h2>
+  <p>
+    Em caso de dúvidas, entre em contato conosco pelo e-mail: suporte@maxfit.com
+  </p>
+
+  <p>Última atualização: Julho de 2025</p>
+
+  <div class="button-container">
+    <button id="aceitarBtn">Li e aceito os termos</button>
+    <button id="recusarBtn">Não aceito os termos</button>
+  </div>
+
+  <!-- Mensagem de aviso -->
+  <div id="mensagem">⚠️ Você precisa aceitar os termos para continuar usando o Max Fit.</div>
+
+  <script>
+    const aceitarBtn = document.getElementById('aceitarBtn');
+    const recusarBtn = document.getElementById('recusarBtn');
+    const mensagem = document.getElementById('mensagem');
+
+  aceitarBtn.addEventListener('click', () => {
+  window.location.href = './10-cadastroSucesso.html'; 
+});
+
+
+    recusarBtn.addEventListener('click', () => {
+      mensagem.style.display = "block"; // Exibe a mensagem
+    });
+  </script>
+</body>
+</html>

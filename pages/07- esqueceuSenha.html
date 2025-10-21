@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Esqueceu a senha - MaxFit</title>
+  <link rel="stylesheet" href="/style/esqueceuSenha.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Esqueceu sua senha?</h2>
+    <p>Digite seu e-mail para receber um link de redefinição.</p>
+
+    <form id="senhaForm">
+      <label for="email">E-mail:</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+      <button type="submit">Enviar link</button>
+    </form>
+
+    <!-- Mensagem que será exibida após o envio -->
+    <p id="mensagem" style="display: none; color: green; font-weight: bold; margin-top: 10px;"></p>
+
+    <a href="06-entrar.html">Voltar para o login</a>
+  </div>
+
+  <!-- Script -->
+  <script src="../js/esqueceuSenha.js"></script>
+</body>
+
+</html>

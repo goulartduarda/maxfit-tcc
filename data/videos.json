@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "titulo": "Peck Deck — Execução Correta",
+    "categoria": "peito",
+    "descricao": "Aprenda a executar o exercício Peck Deck de forma segura e eficiente.",
+    "youtubeId": "-SO_MVV-eUE"
+  },
+  {
+    "id": 2,
+    "titulo": "Leg Press — Dicas de Postura",
+    "categoria": "pernas",
+    "descricao": "Técnica ideal para o leg press e cuidados com a postura.",
+    "youtubeId": "adPY6cd4h58"
+  },
+  {
+    "id": 3,
+    "titulo": "Treino Full Body para Iniciantes",
+    "categoria": "fullbody",
+    "descricao": "Treino completo de corpo inteiro ideal para iniciantes.",
+    "youtubeId": "b8m9zhNAgKs"
+  }
+]

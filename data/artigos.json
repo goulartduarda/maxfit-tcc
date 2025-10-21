@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "titulo": "Como melhorar seu desempenho nos treinos",
+    "categoria": "treinos",
+    "resumo": "Dicas práticas para aumentar força, resistência e foco durante os treinos.",
+    "tags": ["musculação", "dicas", "foco"],
+    "thumb": "https://cdn-icons-png.flaticon.com/512/2331/2331970.png",
+    "atualizadoISO": "2025-10-10",
+    "link": "https://www.treinosacademia.com.br/dicas"
+  },
+  {
+    "id": 2,
+    "titulo": "Mentalidade positiva e constância",
+    "categoria": "mindset",
+    "resumo": "Entenda como manter o foco e a motivação mesmo nos dias difíceis.",
+    "tags": ["motivação", "constância", "hábitos"],
+    "thumb": "https://cdn-icons-png.flaticon.com/512/3448/3448599.png",
+    "atualizadoISO": "2025-09-25",
+    "link": "https://blog.psicologiaviva.com.br/mindset-positivo/"
+  },
+  {
+    "id": 3,
+    "titulo": "Alimentação equilibrada para iniciantes",
+    "categoria": "saúde",
+    "resumo": "Pequenas mudanças na dieta que fazem grande diferença para sua saúde e bem-estar.",
+    "tags": ["nutrição", "alimentação", "saúde"],
+    "thumb": "https://cdn-icons-png.flaticon.com/512/2927/2927347.png",
+    "atualizadoISO": "2025-09-15",
+    "link": "https://www.minhavida.com.br/alimentacao/materias/17360-alimentacao-equilibrada"
+  }
+]

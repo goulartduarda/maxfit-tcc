@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro Aluno - MaxFit</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../style/cadastroAluno.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>CRIAR CONTA</h1>
+      <img src="../img/logo.png" alt="Logo MaxFit" class="logo">
+    </div>
+
+    <!-- Formulário -->
+    <form id="form-aluno">
+      <div class="form-group">
+        <select id="sexo" required>
+          <option value="" disabled selected>Sexo</option>
+          <option value="F">Feminino</option>
+          <option value="M">Masculino</option>
+          <option value="O">Outro</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="date" id="nascimento" placeholder="Data de Nascimento" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="cep" placeholder="CEP (somente números)" required>
+      </div>
+
+      <button type="submit" class="btn">Finalizar Cadastro</button>
+    </form>
+  </div>
+
+  <script>
+    const formAluno = document.getElementById("form-aluno");
+
+    formAluno.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const sexo = document.getElementById("sexo").value;
+      const nascimento = document.getElementById("nascimento").value.trim();
+      const cep = document.getElementById("cep").value.trim();
+
+      // Dados básicos da etapa inicial
+      const nome  = localStorage.getItem("cadastro_nome");
+      const email = localStorage.getItem("cadastro_email");
+      const senha = localStorage.getItem("cadastro_senha");
+      const tipo  = localStorage.getItem("cadastro_tipo");
+
+      if (!nome || !email || !senha || tipo !== "aluno") {
+        alert("Erro: dados básicos não encontrados. Volte e refaça o cadastro.");
+        window.location.href = "./08-cadastro.html";
+        return;
+      }
+
+      // Validação simples do CEP (8 números)
+      if (!/^[0-9]{8}$/.test(cep)) {
+        alert("Digite um CEP válido com 8 números.");
+        return;
+      }
+
+      // Cria objeto aluno
+      const usuario = {
+        nome,
+        email,
+        senha, // ⚠️ apenas para DEV; no backend seria hash
+        tipo: "aluno",
+        policyAccepted: false,
+        dadosAluno: { sexo, nascimento, cep },
+        createdAt: Date.now()
+      };
+
+      // Atualiza lista no localStorage
+      const lista = JSON.parse(localStorage.getItem("usuarios") || "[]");
+      const idx = lista.findIndex(u => u.email === usuario.email);
+      if (idx >= 0) lista[idx] = usuario; else lista.push(usuario);
+
+      localStorage.setItem("usuarios", JSON.stringify(lista));
+
+      // limpa temporários
+      localStorage.removeItem("cadastro_nome");
+      localStorage.removeItem("cadastro_email");
+      localStorage.removeItem("cadastro_senha");
+      localStorage.removeItem("cadastro_tipo");
+
+      // marca logado
+      localStorage.setItem("current_user_email", usuario.email);
+
+      // redireciona
+      window.location.href = "./politica.html";
+    });
+  </script>
+</body>
+</html>

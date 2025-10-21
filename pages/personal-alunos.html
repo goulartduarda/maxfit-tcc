@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MaxFit — Meus Alunos</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --mf-primary: #FF6A00;
+      --mf-bg: #0f0f10;
+      --mf-card: #17181a;
+      --mf-border: #2a2b2e;
+    }
+
+    body {
+      background: linear-gradient(180deg, var(--mf-bg), #121317 60%);
+      color: #e9ecef;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .mf-navbar {
+      background: #0e0f10d6;
+      border-bottom: 1px solid var(--mf-border);
+      backdrop-filter: blur(6px);
+    }
+
+    .mf-card {
+      background: var(--mf-card);
+      border: 1px solid var(--mf-border);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .brand-badge i {
+      color: var(--mf-primary);
+    }
+
+    .btn-mx {
+      background-color: var(--mf-primary);
+      border: none;
+      color: white;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-mx:hover {
+      background-color: #ff8533;
+    }
+
+    .list-aluno {
+      background: #141518;
+      border: 1px solid var(--mf-border);
+      border-radius: .75rem;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .list-aluno strong {
+      color: var(--mf-primary);
+    }
+
+    .modal-content {
+      background-color: var(--mf-card);
+      color: #fff;
+      border: 1px solid var(--mf-border);
+      border-radius: 1rem;
+    }
+
+    .modal-header, .modal-footer {
+      border-color: var(--mf-border);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-dark mf-navbar sticky-top">
+    <div class="container py-2 d-flex justify-content-between align-items-center">
+      <span class="brand-badge"><i class="fa-solid fa-dumbbell"></i> MaxFit — <span class="text-white-50">Personal</span></span>
+      <div class="d-flex align-items-center gap-2">
+        <a class="btn btn-sm btn-outline-light" href="personal-home.html"><i class="fa-solid fa-house"></i></a>
+        <a class="btn btn-sm btn-light" href="personal-alunos.html">Alunos</a>
+        <a class="btn btn-sm btn-outline-light" href="personal-cadastro-treino.html">Criar Treino</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container py-5">
+    <div class="mf-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 m-0">Meus Alunos</h2>
+        <button class="btn btn-mx btn-sm" id="btnNovoAluno"><i class="fa-solid fa-plus"></i> Novo Aluno</button>
+      </div>
+
+      <div id="listaAlunos"></div>
+    </div>
+  </main>
+
+  <!-- MODAL DE NOVO ALUNO -->
+  <div class="modal fade" id="modalNovoAluno" tabindex="-1" aria-labelledby="modalNovoAlunoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalNovoAlunoLabel">Adicionar Novo Aluno</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="listaDisponiveis" class="list-group"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/Js/personal-alunos.js" defer></script>
+</body>
+</html>

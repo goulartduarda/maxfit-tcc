@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suporte Nutricional</title>
+  <link rel="stylesheet" href="/style/aluno/suporte-nutricional.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Topo -->
+    <header class="topbar">
+      <a class="back" href="suporte.html" id="btnVoltar" aria-label="Voltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <h1 class="title">SUPORTE</h1>
+      <img id="fotoPerfilTop" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+    </header>
+
+    <!-- Cabeçalho da seção -->
+    <div class="head-row">
+      <span class="icon-wrap"><ion-icon name="nutrition-outline"></ion-icon></span>
+      <h2 class="head-title">Suporte Nutricional</h2>
+    </div>
+
+    <!-- Conteúdo -->
+    <main class="content">
+      <p class="lead">
+        Encontre o profissional ideal para te acompanhar nessa jornada de transformação rumo à sua melhor versão.
+      </p>
+
+      <div class="search-card">
+        <div class="search-input">
+          <ion-icon name="search-outline" class="search-ico"></ion-icon>
+          <input id="locInput" type="text" placeholder="Buscar localização (ex.: Centro, Florianópolis)"/>
+        </div>
+
+        <div class="row-actions">
+          <button id="btnGeo" class="chip"><ion-icon name="locate-outline"></ion-icon> Usar minha localização</button>
+        </div>
+
+        <button id="btnBuscar" class="btn-primary">Buscar</button>
+
+        <div id="apiHint" class="api-hint" hidden>
+          Para ativar a busca, adicione sua <b>Google Maps API Key</b> em
+          <code>js/suporte-nutricional.js</code> (const <b>GOOGLE_API_KEY</b>).
+        </div>
+      </div>
+
+      <!-- Resultados -->
+      <section id="results" class="results"></section>
+
+      <!-- Paginação -->
+      <div class="more-wrap">
+        <button id="btnMais" class="btn-outline" style="display:none">ver mais</button>
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html">
+        <ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span>
+      </a>
+      <a class="nav-item" href="ficha.html">
+        <ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span>
+      </a>
+      <a class="nav-item" href="progresso.html">
+        <ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span>
+      </a>
+      <a class="nav-item" href="perfil.html">
+        <ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span>
+      </a>
+    </footer>
+  </div>
+
+  <script src="/Js/aluno/suporte-nutricional.js" defer></script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

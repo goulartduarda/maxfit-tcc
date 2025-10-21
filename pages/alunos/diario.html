@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diário de Treino</title>
+  <link rel="stylesheet" href="/style/aluno/diario.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="back" href="/MAXFIT/pages/alunos/inicio.html" id="btnVoltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <h1 class="title">DIÁRIO DE TREINO</h1>
+      <img id="fotoPerfil" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+    </header>
+
+    <main class="content">
+      <!-- Data e humor -->
+      <div class="row spaced">
+        <label class="icon-label"><ion-icon name="calendar-outline"></ion-icon></label>
+        <input id="data" type="date" class="input-date">
+        <div class="moods" id="moods">
+          <button type="button" class="mood" data-mood="0" title="Ruim">😞</button>
+          <button type="button" class="mood" data-mood="1" title="Ok">🙂</button>
+          <button type="button" class="mood" data-mood="2" title="Bom">😀</button>
+          <button type="button" class="mood" data-mood="3" title="Excelente">😎</button>
+        </div>
+      </div>
+
+      <!-- Treino executado + avaliação -->
+      <label class="label">Treino Executado</label>
+      <div class="box">
+        <input id="treino" type="text" class="input" placeholder="Ex.: Treino Superior A - 45 minutos">
+        <div class="inline">
+          <span class="muted">Avaliação:&nbsp;</span>
+          <select id="avaliacao" class="select">
+            <option value="">Selecione</option>
+            <option>Fácil</option>
+            <option>Médio</option>
+            <option>Difícil</option>
+            <option>Muito difícil</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Campos de texto -->
+      <label class="label">Objetivo do dia</label>
+      <input id="objetivo" type="text" class="input" placeholder="Qual era sua meta hoje?">
+
+      <label class="label">O que foi feito hoje</label>
+      <input id="feito" type="text" class="input" placeholder="Ex.: Supino, remada, tríceps, 15 min esteira...">
+
+      <label class="label">Como me senti</label>
+      <input id="senti" type="text" class="input" placeholder="Ex.: cansei no fim, dor leve no joelho...">
+
+      <!-- Imagem -->
+      <div class="add-image">
+        <button type="button" id="btnAddImg" class="add-btn">
+          <ion-icon name="camera-outline"></ion-icon> <span>adicionar imagem</span>
+        </button>
+        <input type="file" id="inputImg" accept="image/*" hidden>
+        <img id="previewImg" class="preview" alt="" style="display:none;">
+      </div>
+
+      <!-- Registrar -->
+      <button id="btnSalvar" class="primary">Registrar Entrada</button>
+
+      <!-- Histórico -->
+      <h2 class="hist-title">Histórico</h2>
+      <div id="historico" class="history"></div>
+    </main>
+
+    <!-- menu inferior -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html"><ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span></a>
+      <a class="nav-item active" href="diario.html"><ion-icon name="book-outline"></ion-icon><span class="nav-label">Diário</span></a>
+      <a class="nav-item" href="treinos.html"><ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span></a>
+      <a class="nav-item" href="perfil.html"><ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span></a>
+    </footer>
+  </div>
+
+  <script src="/Js/aluno/diario.js" defer></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

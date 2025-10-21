@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta - MaxFit</title>
+
+  <link rel="stylesheet" href="/style/cadastro.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="step-indicator">1/2</div>
+
+    <!-- Etapa 1 -->
+    <div id="step1">
+      <div class="header">
+        <img src="../img/logo.png" alt="Logo MaxFit" width="60">
+        <h1>Criar Conta</h1>
+      </div>
+
+      <div class="user-type">
+        <div class="user-type-option">
+          <input type="radio" name="userType" value="aluno" id="aluno">
+          <label for="aluno">🎯<br>Aluno</label>
+        </div>
+        <div class="user-type-option selected">
+          <input type="radio" name="userType" value="personal" id="personal" checked>
+          <label for="personal">💪<br>Personal Trainer</label>
+        </div>
+      </div>
+
+      <form id="formCadastro">
+        <div class="form-group">
+          <input type="text" id="nome" placeholder="Nome completo" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="E-mail" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="senha" placeholder="Senha" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required>
+        </div>
+        <button type="submit" class="btn">Continuar</button>
+      </form>
+
+      <a href="06-entrar.html" class="link">Fazer login</a>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="../js/cadastro.js"></script>
+</body>
+
+</html>

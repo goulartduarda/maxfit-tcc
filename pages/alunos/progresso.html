@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Progresso</title>
+  <link rel="stylesheet" href="/style/aluno/progresso.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Topo -->
+    <header class="topbar">
+      <a class="back" href="inicio.html" id="btnVoltar" aria-label="Voltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <h1 class="title">PROGRESSO</h1>
+      <img id="fotoPerfilTop" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+    </header>
+
+    <main class="content">
+      <!-- Form de Registro -->
+      <section class="card">
+        <h2 class="sec-title">Registrar treino</h2>
+        <form id="formProg" class="form">
+          <div class="grid2">
+            <label>Data
+              <input id="data" type="date" class="pill">
+            </label>
+            <label>Exercício
+              <input id="exercicio" type="text" class="pill" list="ex-list" placeholder="Ex.: Supino reto">
+              <datalist id="ex-list"></datalist>
+            </label>
+          </div>
+
+          <div class="grid3">
+            <label>Peso (kg)
+              <input id="peso" type="number" step="0.5" min="0" class="pill" placeholder="kg">
+            </label>
+            <label>Reps
+              <input id="reps" type="number" step="1" min="1" class="pill" placeholder="10">
+            </label>
+            <label>Séries
+              <input id="series" type="number" step="1" min="1" class="pill" placeholder="3">
+            </label>
+          </div>
+
+          <div class="grid2">
+            <label>RPE (opcional)
+              <input id="rpe" type="number" step="0.5" min="1" max="10" class="pill" placeholder="7.5">
+            </label>
+            <label>Observações
+              <input id="obs" type="text" class="pill" placeholder="Como me senti, ajustes...">
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="btnSalvar" class="btn" type="submit">Registrar</button>
+            <button id="btnCancelarEd" class="btn outline" type="button" hidden>Cancelar edição</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Histórico -->
+      <section class="hist">
+        <div class="hist-head">
+          <h2 class="sec-title">Histórico</h2>
+          <div class="filters">
+            <input id="filtroEx" class="pill" list="ex-list" placeholder="Filtrar por exercício">
+            <button id="btnLimparFiltro" class="chip" type="button">Limpar</button>
+          </div>
+        </div>
+        <div id="histList" class="list"></div>
+        <div id="vazio" class="empty" hidden>Nenhum registro ainda. Use o formulário acima para registrar seu treino.</div>
+      </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html"><ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span></a>
+      <a class="nav-item" href="treinos.html"><ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span></a>
+      <a class="nav-item active" href="progresso.html"><ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span></a>
+      <a class="nav-item" href="perfil.html"><ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span></a>
+    </footer>
+  </div>
+
+  <script src="/Js/aluno/progresso.js" defer></script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

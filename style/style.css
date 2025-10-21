@@ -1,0 +1,181 @@
+
+body {
+    margin: 0; /* Boas práticas: remove a margem padrão do body */
+    font-family: Arial, sans-serif; /* Uma fonte padrão para o corpo */
+}
+
+/* --- Estilos do Cabeçalho --- */
+header {
+    background-color: rgb(0, 0, 0); /* Preto */
+    padding: 10px;
+    display: flex; /* Transforma o header em um container flex */
+    
+    /* Centraliza os itens horizontalmente */
+    justify-content: center; 
+    
+    /* Centraliza os itens verticalmente (se houver espaço para isso) */
+    align-items: center; 
+    
+    /* Permite que os itens quebrem para a próxima linha se não houver espaço suficiente, mantendo o centramento */
+    flex-wrap: wrap; 
+    
+    /* Adiciona um pequeno espaçamento entre os itens */
+    gap: 20px; /* Um espaçamento entre os itens flex */
+}
+
+/* --- Estilos do Título Principal (h1) --- */
+h1 {
+    color: orange;
+    font-weight: bold; /* Um valor válido, como 'bold' ou um número entre 100-900 */
+    font-size: 35px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0; /* Remove margens padrão para melhor controle no flexbox */
+    text-align: center; /* Centraliza o texto dentro do h1, se ele tiver largura suficiente */
+}
+
+/* --- Estilos da Imagem do Logo --- */
+header img { /* Use 'header img' para ser mais específico com a imagem do cabeçalho */
+    width: 100px; /* Reduzi para 100px para um logo típico no header */
+    height: 100px; /* Ajuste a altura para manter a proporção */
+    object-fit: contain; /* Garante que a imagem se ajuste sem cortar ou esticar */
+    margin: 0; /* Remove margens padrão */
+}
+
+/* --- Estilos da Navegação (nav) --- */
+nav {
+    color: orange; /* Cor do texto da navegação */
+    /* font-weight: 20px; <-- Valor inválido, ajustado abaixo se precisar de peso */
+    font-weight: normal; /* Ou 'bold', '700', etc. */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* --- Estilos da Lista de Navegação (nav ul) --- */
+nav ul {
+    list-style: none; /* Remove os marcadores da lista */
+    padding: 0; /* Remove padding padrão da ul */
+    margin: 0; /* Remove margens padrão da ul */
+    display: flex; /* Transforma a ul em um container flex para seus li's */
+    
+    /* Centraliza os links dentro do UL */
+    justify-content: center; 
+    align-items: center; 
+    
+    gap: 20px; /* Adiciona espaçamento entre os links (li's) */
+}
+
+/* --- Estilos dos Itens da Lista de Navegação (nav li) --- */
+nav ul li {
+    /* Você pode adicionar padding aos li's ou aos a's para mais área clicável */
+    /* Por exemplo: padding: 5px 10px; */
+}
+
+/* --- Estilos dos Links da Navegação (nav a) --- */
+nav ul li a {
+    color: orange; /* Cor dos links */
+    text-decoration: none; /* Remove o sublinhado padrão dos links */
+    white-space: nowrap; /* Evita que os links quebrem linha */
+    transition: color 0.3s ease; /* Transição suave para o hover */
+}
+
+nav ul li a:hover {
+    color: lightgray; /* Cor ao passar o mouse */
+}
+
+/* --- Estilos da Seção Principal (main) --- */
+main {
+    padding: 20px;
+    text-align: center; /* Centraliza o texto e elementos inline-block dentro do main */
+}
+
+main section {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 20px auto; /* Centraliza a section dentro do main */
+    display: flex; /* Torna a section um container flex */
+    flex-direction: column; /* Coloca os itens em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente na coluna */
+    justify-content: center; /* Centraliza os itens verticalmente na coluna (se houver espaço) */
+}
+
+main h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+main p {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+main img { /* Estilo para a imagem dentro do main */
+    width: 100%; /* Ajusta a largura para ser responsiva */
+    max-width: 600px; /* Limita a largura máxima para não ficar muito grande */
+    height: auto; /* Mantém a proporção da imagem */}
+    /* --- Estilos do Botão --- */
+button {
+    background-color: orange; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    padding: 10px 20px; /* Espaçamento interno (altura x largura) */
+    border: none; /* Remove a borda padrão do botão */
+    border-radius: 5px; /* Arredonda os cantos do botão */
+    cursor: pointer; /* Muda o cursor para uma "mãozinha" ao passar por cima */
+    font-size: 1.1em; /* Tamanho da fonte do texto do botão */
+    font-weight: bold; /* Deixa o texto em negrito */
+    transition: background-color 0.3s ease; /* Adiciona uma transição suave para o efeito hover */
+    
+    /* Margem para separar do parágrafo acima, se necessário */
+    margin-top: 15px; 
+}
+
+/* Efeito ao passar o mouse (hover) */
+button:hover {
+    background-color: darkorange; /* Altera a cor de fundo para um laranja mais escuro ao passar o mouse */
+}
+
+/* Efeito ao clicar (active) */
+button:active {
+    background-color: rgb(200, 80, 0); /* Cor um pouco mais escura quando o botão é clicado */
+    transform: translateY(1px); /* Pequeno movimento para baixo para dar a sensação de clique */
+}
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  button,
+  .btn-social-google,
+  .btn-social-facebook,
+  .btn-entrar-maxfit {
+    width: 100%;
+    font-size: 1em;
+    padding: 10px;
+    margin-top: 10px;
+  }
+}
+

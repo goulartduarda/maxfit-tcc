@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Perfil</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style/aluno/editarPerfil.css">
+</head>
+<body>
+  <div class="app">
+    <!-- topo -->
+    <header>
+      <a class="back" href="perfil.html" id="btnVoltar" aria-label="Voltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <div class="spacer"></div>
+
+      <!-- NOVO: botão sair (topo direito) -->
+      <button class="logout-btn" id="btnLogout" type="button" title="Sair da conta" aria-label="Sair da conta">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </button>
+    </header>
+
+    <!-- conteúdo -->
+    <main>
+      <div class="avatar-wrap">
+        <div class="avatar-box">
+          <img id="fotoPreview" class="avatar" src="../img/usuario.png" alt="Foto do usuário">
+          <button class="camera-btn" id="btnCamera" type="button" title="Trocar foto">
+            <ion-icon name="camera-outline"></ion-icon>
+          </button>
+        </div>
+        <input type="file" id="inputFoto" accept="image/*" hidden />
+      </div>
+
+      <form id="formEditar" class="form">
+        <label for="nome">Nome completo</label>
+        <input id="nome" type="text" placeholder="Seu nome"/>
+
+        <label for="email">E-mail</label>
+        <input id="email" type="email" placeholder="email@exemplo.com"/>
+
+        <label for="nasc">Data de Nascimento</label>
+        <input id="nasc" type="date"/>
+
+        <label for="sexo">Sexo</label>
+        <select id="sexo">
+          <option value="">Selecione</option>
+          <option>Feminino</option>
+          <option>Masculino</option>
+          <option>Outro</option>
+          <option>Prefiro não dizer</option>
+        </select>
+
+        <label for="cep">CEP</label>
+        <input id="cep" type="text" inputmode="numeric" placeholder="00000-000" maxlength="9"/>
+
+        <button id="btnSalvar" class="btn" type="submit">Atualizar</button>
+      </form>
+    </main>
+
+    <!-- menu inferior -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html">
+        <ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span>
+      </a>
+      <a class="nav-item" href="treinos.html">
+        <ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span>
+      </a>
+      <a class="nav-item" href="progresso.html">
+        <ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span>
+      </a>
+      <a class="nav-item active" href="perfil.html">
+        <ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span>
+      </a>
+    </footer>
+  </div>
+
+  <!-- JS -->
+  <script src="/style/aluno/editarPerfil.css" defer></script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

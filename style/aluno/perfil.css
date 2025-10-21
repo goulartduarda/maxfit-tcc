@@ -1,0 +1,50 @@
+:root{ --mx:#ff6a00; --pastel:#FFD8A8; --vh:1vh; }
+*{ box-sizing:border-box; }
+body{ margin:0; background:#f7f7f7; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif; }
+
+/* “tela de celular” centralizada no web */
+.app{
+  width:100%; max-width:420px; height:calc(var(--vh)*100);
+  margin:0 auto; background:#fff; border:1px solid #ddd; border-radius:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,.08); display:flex; flex-direction:column; overflow:hidden;
+}
+
+header{ display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid #eee; }
+.back{ color:var(--mx); display:flex; align-items:center; gap:6px; text-decoration:none; font-weight:600; }
+.spacer{ flex:1; }
+
+main{ flex:1; overflow:auto; padding:18px 18px 92px; } /* espaço para o menu inferior */
+
+/* avatar + botão editar */
+.avatar-wrap{ display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:6px; }
+.avatar{ width:140px; height:140px; border-radius:50%; object-fit:cover; border:4px solid var(--mx); }
+.btn-edit{
+  background:var(--pastel); color:#333; border:none; border-radius:12px; padding:12px 20px;
+  font-weight:700; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.joined{ margin-top:14px; color:#111; font-weight:600; text-align:left; }
+
+/* card de dados */
+.card{
+  background:var(--mx); color:#fff; border-radius:12px; padding:18px; margin-top:24px;
+  box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+.card h3{ margin:0 0 12px 0; font-size:20px; }
+.line{ margin:8px 0; }
+
+/* menu inferior */
+.bottom-nav{
+  position:sticky; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #e7e7e7; height:68px;
+  display:grid; grid-template-columns:repeat(4,1fr); align-items:center; justify-items:center; padding:6px 6px 8px;
+}
+.nav-item{ display:flex; flex-direction:column; align-items:center; gap:4px; color:#555; text-decoration:none; min-width:72px; }
+.nav-item ion-icon{ font-size:26px; }
+.nav-label{ font-size:12px; font-weight:800; letter-spacing:.3px; text-transform:uppercase; }
+.nav-item.active{ color:var(--mx); } .nav-item.active ion-icon{ color:var(--mx); }
+
+@media (max-width:360px){
+  .avatar{ width:120px; height:120px; }
+  .bottom-nav{ height:62px; }
+  main{ padding-bottom:86px; }
+}

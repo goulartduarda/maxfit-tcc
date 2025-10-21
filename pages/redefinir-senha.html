@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Redefinir Senha - MaxFit</title>
+  <link rel="stylesheet" href="/style/redefinir-senha.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Redefinir sua senha</h2>
+    <p>Insira sua nova senha abaixo.</p>
+
+    <form action="/api/redefinir-senha" method="POST" id="formRedefinirSenha">
+      <!-- O token será enviado pelo link (via JS ou campo hidden) -->
+      <input type="hidden" id="token" name="token" value="">
+
+      <label for="novaSenha">Nova senha:</label><br>
+      <input type="password" id="novaSenha" name="novaSenha" required><br><br>
+
+      <label for="confirmarSenha">Confirmar senha:</label><br>
+      <input type="password" id="confirmarSenha" name="confirmarSenha" required><br><br>
+
+      <button type="submit">Redefinir senha</button>
+    </form>
+
+    <a href="servicos.html">Voltar para o login</a>
+  </div>
+
+  <script>
+    // Captura o token da URL e coloca no campo oculto
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    document.getElementById('token').value = token;
+  </script>
+</body>
+</html>

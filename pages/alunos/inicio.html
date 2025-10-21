@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aluno - Inicial</title>
+  <style>
+    :root{ --vh: 1vh; --mx: #ff6a00; }
+
+    body{
+      margin:0; background:#f7f7f7;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+    }
+
+    .app-container{
+      width:100%; max-width:420px; margin:0 auto;
+      height:calc(var(--vh) * 100);
+      background:#fff; border:1px solid #ddd; border-radius:16px;
+      box-shadow:0 6px 24px rgba(0,0,0,.08);
+      display:flex; flex-direction:column; overflow:hidden;
+    }
+
+    ion-header{border-bottom:1px solid #e7e7e7;background:#fff}
+    ion-toolbar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px}
+    .logo{height:80px}
+    #fotoPerfil{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid var(--mx);cursor:pointer}
+    .saudacao{ text-align:right; padding:14px 18px 8px 18px; font-size:20px; font-weight:700; color:#333 }
+
+    ion-content{flex:1; overflow:auto; padding:16px; padding-bottom:84px;} /* espaço pro menu */
+
+    /* Lembretes (pastel) */
+    .lembrete{ background:#FFD8A8; color:#333; padding:14px; border-radius:12px; margin-bottom:12px; font-size:14px; line-height:1.4; }
+    .lembrete strong{display:block;margin-bottom:4px;font-size:15px}
+    .lembrete small{color:#555;font-size:12px;display:block;margin-top:4px}
+
+    /* FUNÇÕES (grid central) */
+    .sec-titulo{
+      font-weight:800; text-align:center;
+      margin: clamp(24px, calc(var(--vh) * 10), 96px) 0 18px 0;
+    }
+    .funcoes-wrapper{ display:flex; justify-content:center; }
+    .funcoes-grid{
+      width:100%; max-width:320px;
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px; align-items:center; justify-items:center;
+    }
+    .func-btn{
+      width:150px; height:90px; background:var(--mx); color:#fff; border:none; border-radius:16px;
+      display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px;
+      font-size:16px; font-weight:700; text-align:center;
+      box-shadow:0 3px 10px rgba(0,0,0,.08); cursor:pointer; transition:transform .06s ease;
+    }
+    .func-btn:active{ transform: scale(.98); }
+    .func-btn ion-icon{ font-size:28px; }
+
+    /* ======= MENU INFERIOR ======= */
+    .bottom-nav{
+      border-top:1px solid #e7e7e7; background:#fff;
+      height:68px; display:grid; grid-template-columns:repeat(4,1fr);
+      align-items:center; justify-items:center; gap:6px; padding:6px 6px 8px;
+    }
+    .nav-item{
+      display:flex; flex-direction:column; align-items:center; gap:4px;
+      color:#555; text-decoration:none; min-width:72px;
+    }
+    .nav-item ion-icon{ font-size:26px; }
+    .nav-label{
+      font-size:12px; font-weight:800; letter-spacing:.3px; text-transform:uppercase;
+    }
+    .nav-item.active, .nav-item:focus{ color:var(--mx); outline:none; }
+    .nav-item.active ion-icon{ color:var(--mx); }
+
+    @media (max-width:360px){
+      .func-btn{ width:140px; height:86px; }
+      .funcoes-grid{ gap:12px; }
+      .logo{ height:72px; }
+      #fotoPerfil{ width:64px; height:64px; }
+      ion-content{ padding-bottom:78px; }
+      .bottom-nav{ height:62px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Cabeçalho -->
+    <ion-header>
+      <ion-toolbar>
+        <img src="/img/logo.png" alt="Logo MaxFit" class="logo">
+        <img id="fotoPerfil" src="img/usuario.png" alt="Foto do usuário"
+             onclick="document.getElementById('inputFoto').click();">
+      </ion-toolbar>
+    </ion-header>
+
+    <!-- Saudação -->
+    <div class="saudacao" id="saudacao"></div>
+
+    <!-- Input escondido para trocar a foto -->
+    <input type="file" accept="image/*" id="inputFoto" style="display:none" onchange="previewFoto(event)">
+
+    <!-- CONTEÚDO -->
+    <ion-content>
+      <!-- Lembretes -->
+      <div id="listaLembretes"></div>
+
+      <!-- FUNÇÕES -->
+      <div class="sec-titulo">FUNÇÕES</div>
+      <div class="funcoes-wrapper">
+        <div class="funcoes-grid">
+          <button class="func-btn" onclick="ir('diario.html')">
+            <ion-icon name="book-outline"></ion-icon><span>Diário</span>
+          </button>
+          <button class="func-btn" onclick="ir('desafio.html')">
+            <ion-icon name="trophy-outline"></ion-icon><span>Desafio</span>
+          </button>
+         <button class="func-btn" onclick="ir('ficha.html')">
+  <ion-icon name="document-text-outline"></ion-icon>
+  <span>Ficha de<br>Treino</span>
+</button>
+          <button class="func-btn" onclick="ir('suporte.html')">
+            <ion-icon name="help-circle-outline"></ion-icon><span>Suporte</span>
+          </button>
+        </div>
+      </div>
+    </ion-content>
+
+    <!-- MENU INFERIOR -->
+    <footer class="bottom-nav">
+      <a class="nav-item active" href="#" onclick="setActive(this); ir('inicio.html')">
+        <ion-icon name="home-outline"></ion-icon>
+        <span class="nav-label">Início</span>
+      </a>
+      <a class="nav-item" href="#" onclick="setActive(this); ir('ficha.html')">
+        <ion-icon name="clipboard-outline"></ion-icon>
+        <span class="nav-label">Treinos</span>
+      </a>
+      <a class="nav-item" href="#" onclick="setActive(this); ir('progresso.html')">
+        <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        <span class="nav-label">Progresso</span>
+      </a>
+      <a class="nav-item" href="#" onclick="setActive(this); ir('perfil.html')">
+  <ion-icon name="person-outline"></ion-icon>
+  <span class="nav-label">Perfil</span>
+</a>
+    </footer>
+  </div>
+
+  <script>
+    /* Corrige 1vh no mobile */
+    function fixVh(){ const vh = window.innerHeight * 0.01; document.documentElement.style.setProperty('--vh', `${vh}px`); }
+    fixVh(); window.addEventListener('resize', fixVh); window.addEventListener('orientationchange', fixVh);
+
+    const $ = (id)=>document.getElementById(id);
+
+    // Saudação
+    (function(){ const nome = localStorage.getItem('usuario_nome') || 'aluno'; $('saudacao').textContent = 'Olá, ' + nome; })();
+
+    // Foto
+    (function(){ const dataUrl = localStorage.getItem('usuario_foto'); if(dataUrl) $('fotoPerfil').src = dataUrl; })();
+    function previewFoto(e){
+      const f = e.target.files?.[0]; if(!f) return;
+      const r = new FileReader();
+      r.onload = ev => { $('fotoPerfil').src = ev.target.result; localStorage.setItem('usuario_foto', ev.target.result); };
+      r.readAsDataURL(f);
+    }
+
+    // Lembretes (somente leitura; carregados do personal / API futuramente)
+    function carregarLembretesDoPersonal(){
+      try{ const raw = localStorage.getItem('lembretes:default'); return raw ? JSON.parse(raw) : []; }catch{ return []; }
+    }
+    function formatarQuando(iso){
+      if(!iso) return ''; const d = new Date(iso); if(isNaN(d)) return '';
+      return `${d.toLocaleDateString('pt-BR')} às ${d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
+    }
+    function renderLembretes(){
+      const box = $('listaLembretes');
+      const dados = carregarLembretesDoPersonal().sort((a,b)=> new Date(a.quandoISO)-new Date(b.quandoISO));
+      if(!dados.length){ box.innerHTML = `<div class="lembrete">Você não possui lembretes agendados</div>`; return; }
+      box.innerHTML = dados.map(l=>`
+        <div class="lembrete">
+          <strong>${l.titulo || 'Lembrete'}</strong>
+          ${l.mensagem ? `<div>${l.mensagem}</div>`:''}
+          ${l.quandoISO ? `<small>${formatarQuando(l.quandoISO)}</small>`:''}
+        </div>
+      `).join('');
+    }
+    renderLembretes();
+
+    // Navegação
+    function ir(p){ window.location.href = p; }
+    function setActive(el){
+      document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

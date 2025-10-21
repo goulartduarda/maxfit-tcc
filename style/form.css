@@ -1,0 +1,117 @@
+/* --- Estilos para a Seção de Contato --- */
+section {
+    padding: 20px;
+    margin: 20px auto; /* Centraliza a seção na página */
+    max-width: 600px; /* Limita a largura máxima para melhor leitura */
+    background-color: #f8f8f8; /* Um fundo claro para a seção */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidade */
+    text-align: center; /* Centraliza o texto dentro da seção */
+}
+
+section h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+section p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* --- Estilos para o Formulário em Si --- */
+form {
+    display: flex; /* Usa Flexbox para organizar os elementos do formulário */
+    flex-direction: column; /* Coloca os elementos em uma coluna */
+    gap: 15px; /* Espaço entre cada elemento do formulário (label, input, etc.) */
+    padding: 20px;
+    background-color: #fff; /* Fundo branco para o formulário */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: left; /* Alinha o texto interno do formulário à esquerda */
+}
+
+/* --- Estilos para os Rótulos (Labels) --- */
+label {
+    display: block; /* Garante que cada label ocupe sua própria linha */
+    font-weight: bold; /* Texto do label em negrito */
+    margin-bottom: 5px; /* Espaço entre o label e o campo de entrada */
+    color: #555; /* Cor do texto do label */
+}
+
+/* --- Estilos para os Campos de Entrada (Input e Textarea) --- */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%; /* Ocupa 100% da largura disponível no formulário */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Cantos levemente arredondados */
+    font-size: 1em; /* Tamanho da fonte */
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura total */
+    transition: border-color 0.3s ease; /* Transição suave na borda */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: orange; /* Borda laranja ao focar no campo */
+    outline: none; /* Remove o contorno padrão do navegador */
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); /* Sombra suave laranja ao focar */
+}
+
+textarea {
+    resize: vertical; /* Permite redimensionar apenas verticalmente (útil para mensagens longas) */
+}
+
+/* --- Estilos para o Botão de Envio --- */
+form button[type="submit"] { /* Especifica o botão de submit dentro do formulário */
+    background-color: orange;
+    color: white;
+    padding: 12px 25px; /* Padding um pouco maior para o botão de envio */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 10px; /* Espaço acima do botão */
+    align-self: center; /* Centraliza o botão dentro do formulário flexível */
+}
+
+form button[type="submit"]:hover {
+    background-color: darkorange;
+}
+
+form button[type="submit"]:active {
+    background-color: rgb(200, 80, 0);
+    transform: translateY(1px);
+}
+@media (max-width: 768px) {
+  section {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  section h2 {
+    font-size: 1.5em;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    font-size: 1em;
+    padding: 8px;
+  }
+
+  form button[type="submit"] {
+    width: 100%;
+    font-size: 1em;
+    padding: 10px;
+  }
+}

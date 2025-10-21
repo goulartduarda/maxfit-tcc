@@ -1,0 +1,47 @@
+:root{ --mx:#ff6a00; --pastel:#F3ECEB; --vh:1vh; }
+*{ box-sizing:border-box; }
+body{ margin:0; background:#f7f7f7; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif; }
+
+.app{
+  width:100%; max-width:420px; height:calc(var(--vh)*100);
+  margin:0 auto; background:#fff; border:1px solid #ddd; border-radius:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,.08); display:flex; flex-direction:column; overflow:hidden;
+}
+
+/* topo */
+.topbar{ display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid #eee; }
+.back{ color:var(--mx); text-decoration:none; display:flex; align-items:center; }
+.title{ flex:1; margin:0; color:var(--mx); font-size:22px; font-weight:900; letter-spacing:.4px; text-transform:uppercase; }
+.avatar-sm{ width:44px; height:44px; border-radius:50%; object-fit:cover; border:2px solid var(--mx); }
+
+.content{ flex:1; overflow:auto; padding:16px 16px 92px; }
+
+/* lista */
+.support-list{ list-style:none; padding:0; margin:14px 0 0 0; display:flex; flex-direction:column; gap:26px; }
+.support-item{ display:flex; align-items:center; gap:16px; text-decoration:none; color:#111; }
+.icon-wrap{
+  width:42px; height:42px; display:grid; place-items:center; border-radius:50%;
+  background:var(--mx); color:#fff; flex:0 0 42px;
+}
+.icon-wrap ion-icon{ font-size:22px; }
+.item-title{ font-size:22px; font-weight:900; }
+
+/* rodapé */
+.bottom-nav{
+  position:sticky; bottom:0; background:#fff; border-top:1px solid #e7e7e7; height:68px;
+  display:grid; grid-template-columns:repeat(4,1fr); align-items:center; justify-items:center; padding:6px 6px 8px;
+}
+.nav-item{ display:flex; flex-direction:column; align-items:center; gap:4px; color:#555; text-decoration:none; min-width:72px; }
+.nav-item ion-icon{ font-size:26px; }
+.nav-label{ font-size:12px; font-weight:800; letter-spacing:.3px; text-transform:uppercase; }
+
+/* destaque quando algum item estiver ativo (se usar) */
+.bottom-nav .nav-item.active,
+.bottom-nav .nav-item.active .nav-label,
+.bottom-nav .nav-item.active ion-icon{ color:var(--mx); }
+
+@media (max-width:360px){
+  .bottom-nav{ height:62px; }
+  .content{ padding-bottom:86px; }
+  .item-title{ font-size:20px; }
+}

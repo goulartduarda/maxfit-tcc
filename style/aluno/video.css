@@ -1,0 +1,53 @@
+:root{ --mx:#ff6a00; --vh:1vh; }
+*{ box-sizing:border-box; }
+body{ margin:0; background:#f7f7f7; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif; }
+
+.app{ width:100%; max-width:420px; height:calc(var(--vh)*100); margin:0 auto; background:#fff; border:1px solid #ddd; border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,.08); display:flex; flex-direction:column; overflow:hidden; }
+
+/* topo */
+.topbar{ display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid #eee; }
+.back{ color:var(--mx); text-decoration:none; display:flex; align-items:center; }
+.title{ flex:1; margin:0; color:#111; font-size:22px; font-weight:900; letter-spacing:.4px; }
+.avatar-sm{ width:44px; height:44px; border-radius:50%; object-fit:cover; border:2px solid var(--mx); }
+
+/* conteúdo */
+.content{ flex:1; overflow:auto; padding:16px 16px 92px; }
+
+/* hero */
+.hero{ display:grid; grid-template-columns:96px 1fr; gap:14px; align-items:center; margin-bottom:6px; }
+.hero-thumb-wrap{ width:96px; height:96px; border-radius:16px; background:var(--mx); display:grid; place-items:center; box-shadow:0 6px 14px rgba(0,0,0,.08); }
+.hero-thumb{ width:78px; height:78px; object-fit:contain; filter:drop-shadow(0 3px 4px rgba(0,0,0,.18)); }
+.hero-title{ margin:0; font-size:26px; font-weight:900; color:#ff7b15; }
+
+/* seção */
+.sec-title{ margin:14px 0 8px; color:#ff7b15; font-size:18px; font-weight:900; }
+
+/* descrição */
+.desc-card{
+  background:#ff7b1522; color:#222; border-radius:12px; padding:12px 14px; line-height:1.55;
+}
+
+/* thumb com link */
+.thumb-link{ position:relative; display:block; border-radius:12px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+.thumb-link img{ width:100%; display:block; }
+.play-badge{
+  position:absolute; right:10px; bottom:10px; background:#fff; color:var(--mx);
+  border-radius:999px; width:44px; height:44px; display:grid; place-items:center; box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.play-badge ion-icon{ font-size:28px; }
+
+/* botão assistir */
+.btn-primary{
+  display:inline-block; margin-top:12px; background:var(--mx); color:#fff; font-weight:900;
+  padding:12px 18px; border-radius:12px; text-align:center; text-decoration:none;
+}
+.btn-primary:active{ transform:scale(.98); }
+
+/* vazio */
+.empty{ margin-top:12px; background:#FFF2E9; color:#7a3b00; border:1px dashed #FFC99B; padding:12px 14px; border-radius:12px; text-align:center; font-weight:700; }
+
+/* footer */
+.bottom-nav{ position:sticky; bottom:0; background:#fff; border-top:1px solid #e7e7e7; height:68px; display:grid; grid-template-columns:repeat(4,1fr); align-items:center; justify-items:center; padding:6px 6px 8px; }
+.nav-item{ display:flex; flex-direction:column; align-items:center; gap:4px; color:#555; text-decoration:none; }
+.nav-item ion-icon{ font-size:26px; }
+.nav-label{ font-size:12px; font-weight:800; letter-spacing:.3px; text-transform:uppercase; }

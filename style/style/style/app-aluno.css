@@ -1,0 +1,83 @@
+/* Fundo da página */
+body {
+  background: #e5e5e5; /* cinza de fundo externo */
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Moldura do celular */
+.celular {
+  width: 390px;           /* largura aproximada de um iPhone */
+  min-height: 700px;      /* altura mínima */
+  background: #fff;       /* fundo branco */
+  border-radius: 30px;    /* bordas arredondadas */
+  box-shadow: 0 0 20px rgba(0,0,0,0.3); /* sombra */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 8px solid #000; /* borda preta simulando celular */
+}
+
+/* Conteúdo interno */
+.container {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Logo e título */
+.logo {
+  width: 100px;
+  margin: 20px auto;
+  display: block;
+}
+
+/* Botões */
+.btn {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn.laranja {
+  background: #FF6A00;
+  color: #fff;
+}
+
+.btn.marrom {
+  background: #6c4f3d;
+  color: #fff;
+}
+
+/* Barra de navegação inferior */
+.nav-inferior {
+  display: flex;
+  justify-content: space-around;
+  background: #fafafa;
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.nav-inferior a {
+  text-align: center;
+  color: #FF6A00;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.nav-inferior i {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}

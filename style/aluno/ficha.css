@@ -1,0 +1,54 @@
+/* Cards de planos */
+.section{ margin-top:8px; }
+.sec-title{ margin:6px 0 10px; font-size:18px; font-weight:900; color:#222; }
+
+.plan-list{ display:flex; flex-direction:column; gap:10px; }
+.plan-card{
+  background:#fff; border:1px solid #eee; border-radius:12px; padding:12px 14px;
+  box-shadow:0 3px 10px rgba(0,0,0,.05); cursor:pointer; transition:transform .05s ease;
+}
+.plan-card:active{ transform:scale(.98); }
+.plan-title{ font-weight:800; margin-bottom:6px; color:#111; }
+.plan-line{ color:#444; display:flex; align-items:center; gap:6px; }
+.pill-mini{ background:#FFD8A8; padding:2px 8px; border-radius:10px; font-weight:700; font-size:12px; color:#333; }
+.plan-assign{ color:#777; font-size:12px; margin-top:6px; }
+
+/* Detalhe */
+.detail-head{ display:flex; align-items:center; gap:10px; }
+.btn-outline-sm{
+  padding:8px 10px; border-radius:10px; border:1px solid #ddd; background:#fff; font-weight:800; cursor:pointer;
+}
+.plan-meta{ color:#555; margin:6px 0 12px; }
+
+/* Dias / exercícios */
+.days-wrap{ display:flex; flex-direction:column; gap:10px; }
+.day{ border:1px solid #eee; border-radius:12px; background:#fff; overflow:hidden; }
+.day-head{
+  list-style:none; display:flex; justify-content:space-between; align-items:center;
+  padding:12px 14px; font-weight:800; cursor:pointer;
+}
+.day-body{ padding:10px 14px 14px; }
+.ex-row{ padding:10px 0; border-bottom:1px dashed #eee; }
+.ex-row:last-child{ border-bottom:none; }
+.ex-name{ font-weight:700; color:#222; }
+.ex-meta{ display:flex; gap:8px; font-size:13px; color:#555; margin-top:4px; }
+.ex-notes{ margin-top:6px; font-size:13px; color:#444; }
+.ex-empty{ color:#777; font-size:13px; }
+
+.empty{
+  background:#FFE8CC; border-radius:12px; padding:14px; color:#333;
+  box-shadow:0 3px 10px rgba(0,0,0,.05);
+}
+/* deixa o item selecionado laranja no rodapé */
+.bottom-nav .nav-item.active,
+.bottom-nav .nav-item.active .nav-label,
+.bottom-nav .nav-item.active ion-icon {
+  color: var(--mx) !important;   /* força sobrepor o color padrão (#555) */
+}
+
+/* se preferir usar aria-current="page" no HTML */
+.bottom-nav .nav-item[aria-current="page"],
+.bottom-nav .nav-item[aria-current="page"] .nav-label,
+.bottom-nav .nav-item[aria-current="page"] ion-icon {
+  color: var(--mx) !important;
+}

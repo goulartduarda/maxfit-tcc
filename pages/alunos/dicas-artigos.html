@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área de Dicas e Artigos</title>
+  <link rel="stylesheet" href="/style/aluno/dicas-artigos.css">
+  <style>
+    body {
+      background: #fafafa;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      color: #333;
+    }
+
+    .app { display: flex; flex-direction: column; height: 100vh; }
+
+    .topbar {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar .title { color: #ff7c00; font-size: 1.1rem; font-weight: 700; }
+    .avatar-sm { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid #ff7c00; }
+
+    .head-row { display: flex; align-items: center; padding: 1rem; gap: 0.6rem; }
+    .icon-wrap { background: #fff3e8; color: #ff7c00; padding: 0.4rem 0.6rem; border-radius: 10px; font-size: 1.3rem; }
+    .head-title { color: #222; font-size: 1.2rem; font-weight: 700; }
+
+    .search-bar {
+      background: #fff;
+      border: 1.5px solid #ff7c00;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 0.8rem;
+      margin: 0 1rem;
+      gap: 0.4rem;
+    }
+    .search-bar input { border: none; outline: none; flex: 1; font-size: 1rem; color: #444; }
+
+    .chips { display: flex; gap: 0.5rem; padding: 1rem; flex-wrap: wrap; }
+    .chip {
+      border: 1px solid #ff7c00; color: #ff7c00; background: #fff;
+      border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.9rem;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .chip.active, .chip:hover { background: #ff7c00; color: #fff; }
+
+    .list { display: flex; flex-direction: column; gap: 1rem; padding: 0 1rem 5rem; }
+    .card {
+      display: flex; gap: 0.8rem; background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05); padding: 0.8rem;
+      cursor: pointer; transition: transform 0.2s ease;
+    }
+    .card:hover { transform: scale(1.01); }
+    .card img { width: 96px; height: 96px; border-radius: 10px; object-fit: cover; }
+
+    .ctitle { font-weight: 700; color: #ff7c00; font-size: 1rem; }
+    .cmeta { color: #777; font-size: 0.85rem; margin: 4px 0; }
+    .cresumo { color: #444; font-size: 0.9rem; line-height: 1.4; }
+
+    .empty {
+      text-align: center; color: #666; background: #fff3e8;
+      padding: 1rem; margin: 1rem; border-radius: 10px; border: 1px solid #ffd8b2;
+    }
+
+    .bottom-nav {
+      display: flex; justify-content: space-around; background: #fff;
+      border-top: 1px solid #eee; padding: 0.5rem 0; position: fixed;
+      bottom: 0; width: 100%;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center;
+      font-size: 0.75rem; color: #444; text-decoration: none;
+    }
+    .nav-item ion-icon { font-size: 1.4rem; color: #ff7c00; }
+    .nav-item .nav-label { margin-top: 3px; }
+
+    /* ===== Modal de artigo ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 14px;
+      max-width: 600px;
+      width: 90%;
+      padding: 1rem;
+      overflow-y: auto;
+      max-height: 85vh;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal h2 {
+      color: #ff7c00;
+      margin-top: 0;
+    }
+
+    .modal img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+    }
+
+    .modal .artigo-banner {
+      width: 100%;
+      height: 160px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff9b40, #ff7c00);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 600; font-size: 1.1rem;
+    }
+
+    .modal p { color: #444; line-height: 1.5; }
+    .modal .tag {
+      display: inline-block;
+      background: #fff3e8;
+      color: #ff7c00;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-right: 5px;
+    }
+
+    .btn-leia {
+      display: block;
+      text-align: center;
+      background: #ff7c00;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #ff7c00;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 10px; right: 18px;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="back" href="suporte.html" id="btnVoltar" aria-label="Voltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <h1 class="title">SUPORTE</h1>
+      <img id="fotoPerfilTop" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+    </header>
+
+    <div class="head-row">
+      <span class="icon-wrap"><ion-icon name="book-outline"></ion-icon></span>
+      <h2 class="head-title">Área de Dicas e Artigos</h2>
+    </div>
+
+    <main class="content">
+      <div class="search-bar">
+        <ion-icon name="search-outline"></ion-icon>
+        <input id="q" type="text" placeholder="Buscar por título, tag...">
+      </div>
+
+      <div class="chips">
+        <button class="chip active" data-cat="todos">Todos</button>
+        <button class="chip" data-cat="treinos">Treinos</button>
+        <button class="chip" data-cat="mindset">Mindset</button>
+        <button class="chip" data-cat="saude">Saúde</button>
+      </div>
+
+      <section id="lista" class="list"></section>
+      <div id="vazio" class="empty" hidden>Nenhum artigo encontrado.</div>
+    </main>
+
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html"><ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span></a>
+      <a class="nav-item" href="ficha.html"><ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span></a>
+      <a class="nav-item" href="progresso.html"><ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span></a>
+      <a class="nav-item" href="perfil.html"><ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span></a>
+    </footer>
+  </div>
+
+  <!-- ===== Modal do artigo ===== -->
+  <div class="modal" id="modalArtigo">
+    <div class="modal-content" id="modalContent">
+      <button class="close-btn" id="btnFechar"><ion-icon name="close-outline"></ion-icon></button>
+      <div id="artigoDetalhe"></div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id)=>document.getElementById(id);
+    const DATA_URL = "../../data/artigos.json";
+    let DATA = [];
+    let catAtiva = 'todos';
+    let q = '';
+
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      const foto = localStorage.getItem("usuario_foto");
+      if(foto) $("fotoPerfilTop").src = foto;
+
+      $("btnVoltar").addEventListener("click", e=>{
+        e.preventDefault();
+        history.length>1 ? history.back() : location.href='suporte.html';
+      });
+
+      await carregar();
+
+      document.querySelectorAll(".chip").forEach(ch=>{
+        ch.addEventListener("click", ()=>{
+          document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+          ch.classList.add("active");
+          catAtiva = ch.dataset.cat;
+          render();
+        });
+      });
+
+      $("q").addEventListener("input", e=>{
+        q = (e.target.value||"").toLowerCase();
+        render();
+      });
+
+      $("lista").addEventListener("click", e=>{
+        const card = e.target.closest(".card");
+        if(!card) return;
+        const id = parseInt(card.dataset.id);
+        const artigo = DATA.find(a=>a.id===id);
+        if(artigo) abrirModal(artigo);
+      });
+
+      $("btnFechar").addEventListener("click", ()=> $("modalArtigo").classList.remove("active"));
+      render();
+    });
+
+    async function carregar(){
+      try {
+        const res = await fetch(DATA_URL, {cache:"no-store"});
+        DATA = await res.json();
+      } catch {
+        DATA = [];
+      }
+    }
+
+    function render(){
+      const box = $("lista");
+      let list = [...DATA];
+      if(catAtiva !== "todos") list = list.filter(a=>a.categoria===catAtiva);
+      if(q){
+        list = list.filter(a=>(
+          (a.titulo||"").toLowerCase().includes(q) ||
+          (a.resumo||"").toLowerCase().includes(q) ||
+          (a.tags||[]).some(t=>(t||"").toLowerCase().includes(q))
+        ));
+      }
+      if(!list.length){ box.innerHTML=""; $("vazio").hidden=false; return; }
+      $("vazio").hidden=true;
+      box.innerHTML = list.map(cardHtml).join("");
+    }
+
+    function cardHtml(a){
+      const data = a.atualizadoISO ? new Date(a.atualizadoISO).toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}) : "";
+      const tags = (a.tags||[]).slice(0,3).join(", ");
+      return `
+      <article class="card" data-id="${String(a.id)}">
+        ${a.thumb ? `<img src="${a.thumb}" alt="">` : `<div style="width:96px;height:96px;border-radius:10px;background:#fff3e8"></div>`}
+        <div>
+          <div class="ctitle">${a.titulo}</div>
+          <div class="cmeta">${a.categoria||""}${data?` • ${data}`:""}${tags?` • ${tags}`:""}</div>
+          ${a.resumo ? `<div class="cresumo">${a.resumo}</div>` : ""}
+        </div>
+      </article>`;
+    }
+
+    function abrirModal(a){
+      const tags = (a.tags||[]).map(t=>`<span class="tag">${t}</span>`).join(" ");
+      const data = a.atualizadoISO ? new Date(a.atualizadoISO).toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"}) : "";
+      $("artigoDetalhe").innerHTML = `
+        <h2>${a.titulo}</h2>
+        <p style="color:#777;font-size:0.9rem;">${a.categoria.toUpperCase()} • ${data}</p>
+        ${a.thumb ? `<img src="${a.thumb}" alt="">` : `<div class="artigo-banner">MAXFIT • DICAS & ARTIGOS</div>`}
+        <p>${a.resumo}</p>
+        <div>${tags}</div>
+        <a href="${a.link}" target="_blank" class="btn-leia">Ler artigo completo</a>
+      `;
+      $("modalArtigo").classList.add("active");
+    }
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

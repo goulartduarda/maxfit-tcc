@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Criar Desafio</title>
+  <link rel="stylesheet" href="/style/aluno/criarDesafio.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Topo -->
+    <header class="topbar">
+      <a class="back" href="desafio.html" id="btnVoltar" aria-label="Voltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <h1 class="title">CRIAR</h1>
+      <img id="fotoPerfilTop" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+    </header>
+
+    <main class="content">
+      <form id="formCriar" class="form">
+        <label for="titulo">Titulo</label>
+        <input id="titulo" type="text" class="pill" placeholder="Ex.: Desafio: 5km Corrida" autocomplete="off"/>
+
+        <label for="descricao">Descrição</label>
+        <input id="descricao" type="text" class="pill" placeholder="Resumo do desafio" autocomplete="off"/>
+
+        <label for="ate">Data de Termino</label>
+        <input id="ate" type="date" class="pill"/>
+
+        <div class="aluno-bloco">
+          <div class="aluno-label">Aluno</div>
+          <div class="aluno-row">
+            <img id="fotoAluno" class="avatar-sm" src="../img/usuario.png" alt="aluno"/>
+            <input id="nomeAluno" class="pill readonly" type="text" readonly />
+          </div>
+        </div>
+
+        <!-- Criar -->
+        <button class="btn-primary" type="submit">Criar desafios</button>
+
+        <!-- Ações extras (visíveis quando estiver editando um desafio existente) -->
+        <div class="aluno-row" style="gap:10px; margin-top:10px;">
+          <!-- Link para página de edição; o id poderá ser anexado via JS: editarDesafio.html?id=... -->
+          <a id="btnIrEditar" class="btn-primary" href="editarDesafio.html" style="display:none; text-align:center;">
+            Editar desafio
+          </a>
+          <!-- Botão para marcar como concluído (acionado via JS) -->
+          <button id="btnConcluir" type="button" class="btn-primary" style="display:none;">
+            Marcar como concluído
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <!-- menu inferior -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html"><ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span></a>
+      <a class="nav-item" href="ficha.html"><ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span></a>
+      <a class="nav-item" href="progresso.html"><ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span></a>
+      <a class="nav-item" href="perfil.html"><ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span></a>
+    </footer>
+  </div>
+<!-- carrega o JS desta página -->
+<script src="/Js/aluno/criarDesafio.js" defer></script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

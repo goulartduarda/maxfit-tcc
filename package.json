@@ -1,0 +1,26 @@
+{
+  "name": "maxfit-tcc2",
+  "version": "1.0.0",
+  "description": "🏋️ MaxFit - Projeto de TCC II\r O MaxFit é um projeto de aplicativo voltado para a gestão de treinos personalizados em academias, desenvolvido como parte do Trabalho de Conclusão de Curso II do curso de Análise e Desenvolvimento de Sistemas do IFSC.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinara-santinoni/maxfit-tcc2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sinara-santinoni/maxfit-tcc2/issues"
+  },
+  "homepage": "https://github.com/sinara-santinoni/maxfit-tcc2#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.1"
+  }
+}

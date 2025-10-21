@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perfil do Aluno</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style/aluno/perfil.css">
+</head>
+<body>
+  <div class="app">
+    <!-- topo -->
+    <header>
+      <a class="back" href="inicio.html" id="btnVoltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <div class="spacer"></div>
+    </header>
+
+    <!-- conteúdo -->
+    <main>
+      <div class="avatar-wrap">
+        <img id="fotoPerfil" class="avatar" src="../img/usuario.png" alt="Foto do usuário">
+        <button class="btn-edit" id="btnEditar">Editar Perfil</button>
+      </div>
+
+      <div id="entrou" class="joined"></div>
+
+      <section class="card">
+        <h3>Dados Pessoais</h3>
+        <div class="line"><strong>Nome:</strong> <span id="nome"></span></div>
+        <div class="line"><strong>E-mail:</strong> <span id="email"></span></div>
+        <div class="line"><strong>Data de Nascimento:</strong> <span id="nasc"></span></div>
+        <div class="line"><strong>Sexo:</strong> <span id="sexo"></span></div>
+        <div class="line"><strong>CEP:</strong> <span id="cep"></span></div>
+      </section>
+    </main>
+
+    <!-- menu inferior -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html">
+        <ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span>
+      </a>
+      <a class="nav-item" href="treinos.html">
+        <ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span>
+      </a>
+      <a class="nav-item" href="progresso.html">
+        <ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span>
+      </a>
+      <a class="nav-item active" href="perfil.html">
+        <ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span>
+      </a>
+    </footer>
+  </div>
+
+  <!-- JS -->
+  <script src="/Js/aluno/perfil.js" defer></script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tutoriais em Vídeo</title>
+  <link rel="stylesheet" href="/style/aluno/tutoriais-videos.css">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body {
+      background:#f1f1f1;
+      font-family:'Inter',Arial,sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      min-height:100vh;
+      padding:1rem 0;
+    }
+
+    /* Moldura central tipo celular */
+    .app-wrapper {
+      background:#fff;
+      width:390px;              /* largura padrão mobile */
+      max-width:100%;
+      border-radius:18px;
+      box-shadow:0 0 25px rgba(0,0,0,0.1);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:calc(100vh - 2rem);
+    }
+
+    .app {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding-bottom:70px; /* espaço para bottom-nav */
+    }
+
+    /* ===== Topo ===== */
+    .topbar {
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0.8rem 1rem;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      z-index:10;
+    }
+    .topbar .title{color:#ff7c00;font-weight:700;font-size:1.1rem}
+    .avatar-sm{width:38px;height:38px;border-radius:50%;border:2px solid #ff7c00;object-fit:cover}
+
+    .head-row{display:flex;align-items:center;gap:0.6rem;padding:1rem;}
+    .icon-wrap{background:#fff3e8;color:#ff7c00;padding:0.5rem;border-radius:10px;font-size:1.3rem;}
+    .head-title{font-weight:700;color:#222;font-size:1.1rem;}
+
+    /* ===== Busca e filtros ===== */
+    .search-bar{
+      border:1.5px solid #ff7c00;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+      padding:0.6rem 0.8rem;
+      margin:0 1rem;
+    }
+    .search-bar input{border:none;outline:none;flex:1;font-size:1rem;color:#444;}
+
+    .chips{display:flex;gap:0.5rem;flex-wrap:wrap;padding:1rem;}
+    .chip{
+      border:1px solid #ff7c00;
+      color:#ff7c00;
+      background:#fff;
+      border-radius:20px;
+      padding:0.4rem 1rem;
+      font-size:0.9rem;
+      cursor:pointer;
+      transition:all 0.3s ease;
+    }
+    .chip.active,.chip:hover{background:#ff7c00;color:#fff;}
+
+    /* ===== Lista ===== */
+    .list{display:flex;flex-direction:column;gap:1rem;padding:0 1rem 1rem;}
+    .card{
+      display:flex;gap:0.8rem;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      padding:0.8rem;
+      cursor:pointer;
+      transition:transform 0.2s ease;
+    }
+    .card:hover{transform:scale(1.01);}
+    .card img{width:120px;height:80px;border-radius:10px;object-fit:cover;}
+    .ctitle{font-weight:700;color:#ff7c00;font-size:1rem;}
+    .cmeta{color:#777;font-size:0.85rem;margin:4px 0;}
+    .cresumo{color:#444;font-size:0.9rem;line-height:1.4;}
+
+    .empty{
+      text-align:center;
+      color:#666;
+      background:#fff3e8;
+      padding:1rem;
+      margin:1rem;
+      border-radius:10px;
+      border:1px solid #ffd8b2;
+    }
+
+    /* ===== Bottom nav ===== */
+    .bottom-nav{
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+      background:#fff;
+      border-top:1px solid #eee;
+      padding:0.5rem 0.3rem;
+      position:sticky;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:20;
+    }
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      font-size:0.75rem;
+      color:#444;
+      text-decoration:none;
+    }
+    .nav-item ion-icon{font-size:1.4rem;color:#ff7c00;}
+    .nav-item .nav-label{margin-top:3px;}
+  </style>
+</head>
+
+<body>
+  <div class="app-wrapper">
+    <div class="app">
+      <header class="topbar">
+        <a class="back" href="suporte.html" id="btnVoltar"><ion-icon name="arrow-back-outline"></ion-icon></a>
+        <h1 class="title">SUPORTE</h1>
+        <img id="fotoPerfilTop" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+      </header>
+
+      <div class="head-row">
+        <span class="icon-wrap"><ion-icon name="play-circle-outline"></ion-icon></span>
+        <h2 class="head-title">Tutoriais em Vídeo</h2>
+      </div>
+
+      <main class="content">
+        <div class="search-bar">
+          <ion-icon name="search-outline"></ion-icon>
+          <input id="q" type="text" placeholder="Buscar por título, tag...">
+        </div>
+
+        <div class="chips">
+          <button class="chip active" data-cat="todos">Todos</button>
+          <button class="chip" data-cat="peito">Peito</button>
+          <button class="chip" data-cat="pernas">Pernas</button>
+          <button class="chip" data-cat="fullbody">Full body</button>
+        </div>
+
+        <section id="lista" class="list"></section>
+        <div id="vazio" class="empty" hidden>Nenhum vídeo encontrado.</div>
+      </main>
+
+      <footer class="bottom-nav">
+        <a class="nav-item" href="inicio.html"><ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span></a>
+        <a class="nav-item" href="ficha.html"><ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span></a>
+        <a class="nav-item" href="progresso.html"><ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span></a>
+        <a class="nav-item" href="perfil.html"><ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span></a>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id)=>document.getElementById(id);
+    const DATA_URL = "../../data/videos.json";
+
+    let DATA = [];
+    let catAtiva = 'todos';
+    let q = '';
+
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      const foto = localStorage.getItem('usuario_foto');
+      if(foto) $('fotoPerfilTop').src = foto;
+
+      $('btnVoltar')?.addEventListener('click', e=>{
+        e.preventDefault();
+        history.length>1 ? history.back() : location.href='suporte.html';
+      });
+
+      await carregar();
+
+      document.querySelectorAll('.chip').forEach(ch=>{
+        ch.addEventListener('click', ()=>{
+          document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+          ch.classList.add('active');
+          catAtiva = ch.dataset.cat;
+          render();
+        });
+      });
+
+      $('q').addEventListener('input', e=>{
+        q = (e.target.value||'').toLowerCase();
+        render();
+      });
+
+      $('lista').addEventListener('click', e=>{
+        const card = e.target.closest('.card');
+        if(!card) return;
+        const id = card.dataset.id;
+        location.href = `video.html?id=${encodeURIComponent(id)}`;
+      });
+
+      render();
+    });
+
+    async function carregar(){
+      try {
+        const res = await fetch(DATA_URL, { cache:'no-store' });
+        DATA = await res.json();
+      } catch {
+        console.warn("Erro ao carregar vídeos.");
+        DATA = [];
+      }
+    }
+
+    function render(){
+      const box = $('lista');
+      let list = [...DATA];
+      if(catAtiva !== 'todos') list = list.filter(v => v.categoria === catAtiva);
+      if(q){
+        list = list.filter(v => (
+          (v.titulo||'').toLowerCase().includes(q) ||
+          (v.descricao||'').toLowerCase().includes(q)
+        ));
+      }
+      if(!list.length){
+        box.innerHTML = '';
+        $('vazio').hidden = false;
+        return;
+      }
+      $('vazio').hidden = true;
+      box.innerHTML = list.map(v=>`
+        <article class="card" data-id="${v.id}">
+          <img src="https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg" alt="">
+          <div>
+            <div class="ctitle">${v.titulo}</div>
+            <div class="cmeta">${v.categoria}</div>
+            ${v.descricao ? `<div class="cresumo">${v.descricao}</div>` : ''}
+          </div>
+        </article>
+      `).join('');
+    }
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

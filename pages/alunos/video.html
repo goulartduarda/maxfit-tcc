@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistir Vídeo</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #fafafa; margin: 0; }
+    .app { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ======= TOPO ======= */
+    .topbar {
+      background: #fff;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .title { color: #ff7c00; font-weight: 700; font-size: 1.1rem; }
+    .avatar-sm {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid #ff7c00; object-fit: cover;
+    }
+
+    /* ======= CONTEÚDO ======= */
+    .video-box {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 10px;
+      border: none;
+      background: #000;
+    }
+
+    h2 {
+      color: #ff7c00;
+      margin-top: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    p {
+      color: #444;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    /* ======= ANIMAÇÃO ======= */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======= BOTÃO VOLTAR ======= */
+    #btnVoltar {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    #btnVoltar ion-icon {
+      font-size: 1.6rem;
+      color: #ff7c00;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <button id="btnVoltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <h1 class="title">SUPORTE</h1>
+      <img id="fotoPerfilTop" class="avatar-sm" src="../img/usuario.png" alt="perfil">
+    </header>
+
+    <main class="video-box">
+      <h2 id="titulo"></h2>
+      <iframe id="player" src="" allowfullscreen></iframe>
+      <p id="descricao"></p>
+    </main>
+  </div>
+
+  <script>
+    // --- BOTÃO VOLTAR ---
+    document.getElementById("btnVoltar").addEventListener("click", (e)=>{
+      e.preventDefault();
+      // volta se tiver histórico, senão redireciona manualmente
+      if (history.length > 1) history.back();
+      else window.location.href = "tutoriais-videos.html";
+    });
+
+    // --- CARREGAR DADOS DO VÍDEO ---
+    const params = new URLSearchParams(location.search);
+    const id = parseInt(params.get("id"));
+    fetch("../../data/videos.json")
+      .then(r=>r.json())
+      .then(videos=>{
+        const v = videos.find(x=>x.id===id);
+        if(v){
+          document.getElementById("titulo").textContent = v.titulo;
+          document.getElementById("descricao").textContent = v.descricao;
+          document.getElementById("player").src = `https://www.youtube.com/embed/${v.youtubeId}`;
+        } else {
+          document.getElementById("titulo").textContent = "Vídeo não encontrado";
+          document.getElementById("descricao").textContent = "O vídeo selecionado não pôde ser carregado.";
+        }
+      })
+      .catch(()=> {
+        document.getElementById("titulo").textContent = "Erro ao carregar vídeo";
+        document.getElementById("descricao").textContent = "Verifique sua conexão ou tente novamente mais tarde.";
+      });
+
+    // --- FOTO DO TOPO ---
+    const foto = localStorage.getItem("usuario_foto");
+    if(foto) document.getElementById("fotoPerfilTop").src = foto;
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

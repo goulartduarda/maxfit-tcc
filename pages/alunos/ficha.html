@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ficha de Treino</title>
+
+  <!-- Reaproveita seu visual base -->
+  <link rel="stylesheet" href="/style/aluno/criarDesafio.css">
+  <!-- Estilos específicos desta página -->
+  <link rel="stylesheet" href="/style/aluno/ficha.css">
+
+</head>
+<body>
+  <div class="app">
+    <!-- Topo -->
+    <header class="topbar">
+      <a class="back" href="inicio.html" id="btnVoltar"><ion-icon name="arrow-back-outline"></ion-icon></a>
+      <h1 class="title">FICHA DE TREINO</h1>
+      <img id="fotoPerfilTop" class="avatar-sm" src="/Aluno-MaxFit/img/usuario.png" alt="perfil">
+    </header>
+
+    <main class="content">
+      <!-- Lista de planos atribuídos ao aluno -->
+      <section id="secLista" class="section">
+        <h3 class="sec-title">Planos atribuídos</h3>
+        <div id="planList" class="plan-list"></div>
+        <div id="planEmpty" class="empty" style="display:none;">
+          Nenhuma ficha atribuída ainda. Peça ao seu personal para liberar um plano.
+        </div>
+      </section>
+
+      <!-- Detalhe do plano selecionado -->
+      <section id="secDetalhe" class="section" style="display:none;">
+        <div class="detail-head">
+          <button id="btnVoltarLista" class="btn-outline-sm">
+            <ion-icon name="chevron-back-outline"></ion-icon> Voltar à lista
+          </button>
+          <h3 id="planTitle" class="sec-title">—</h3>
+          <div id="planMeta" class="plan-meta"></div>
+        </div>
+
+        <!-- Dias (A, B, C…) -->
+        <div id="daysWrap" class="days-wrap"></div>
+      </section>
+    </main>
+
+    <!-- menu inferior -->
+    <footer class="bottom-nav">
+      <a class="nav-item" href="inicio.html"><ion-icon name="home-outline"></ion-icon><span class="nav-label">Início</span></a>
+      <a class="nav-item active" href="ficha.html"><ion-icon name="clipboard-outline"></ion-icon><span class="nav-label">Treinos</span></a>
+      <a class="nav-item" href="progresso.html"><ion-icon name="checkmark-done-circle-outline"></ion-icon><span class="nav-label">Progresso</span></a>
+      <a class="nav-item" href="perfil.html"><ion-icon name="person-outline"></ion-icon><span class="nav-label">Perfil</span></a>
+    </footer>
+  </div>
+
+<script src="/Js/aluno/ficha.js"></script>
+
+
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
