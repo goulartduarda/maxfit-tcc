@@ -20,21 +20,25 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o banco de dados
+// 🔹 Conexão com o Supabase (PostgreSQL hospedado)
 // ============================================================
+const { createConnection } = require("mysql2/promise");
+
 let db;
 
 async function conectarBanco() {
   try {
-    db = await mysql.createConnection({
-      host: "localhost",
-      user: "root", // ajuste se necessário
-      password: "root", // ajuste se necessário
-      database: "maxfit"
+    db = await createConnection({
+      host: "db.wmfefhqcgkpzujlnsklv.supabase.co",
+      user: "postgres",
+      password: "root", // 🔹 coloca aqui a senha que criou no Supabase
+      database: "postgres",
+      port: 5432,
+      ssl: { rejectUnauthorized: false } // Supabase exige SSL
     });
-    console.log("✅ Conectado ao MySQL (banco maxfit)");
+    console.log("✅ Conectado ao banco Supabase (PostgreSQL)");
   } catch (erro) {
-    console.error("❌ Erro ao conectar ao MySQL:", erro);
+    console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
   }
 }
