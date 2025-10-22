@@ -6,7 +6,17 @@ const cors = require("cors");
 const mysql = require("mysql2/promise");
 
 const app = express();
-app.use(cors());
+
+// ✅ Configuração CORS ajustada para Netlify + local
+app.use(cors({
+  origin: [
+    "https://cheerful-klepon-54ef0e.netlify.app", // front hospedado
+    "http://localhost:5500" // opcional para testes locais
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
 // ============================================================
@@ -34,6 +44,7 @@ app.use((req, res, next) => {
   if (!db) return res.status(500).json({ erro: "Banco não conectado." });
   next();
 });
+
 
 // ============================================================
 // 🔹 LOGIN
