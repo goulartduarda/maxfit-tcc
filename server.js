@@ -20,29 +20,34 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o Supabase (PostgreSQL hospedado)
+// 🔹 Conexão com o Supabase (forçando IPv4 + SSL)
 // ============================================================
-const { createConnection } = require("mysql2/promise");
+const mysql = require("mysql2/promise");
 
 let db;
 
 async function conectarBanco() {
   try {
-    db = await createConnection({
+    db = await mysql.createConnection({
       host: "db.wmfefhqcgkpzujlnsklv.supabase.co",
       user: "postgres",
-      password: "root", // 🔹 coloca aqui a senha que criou no Supabase
+      password: "root", // tua senha do Supabase
       database: "postgres",
       port: 5432,
-      ssl: { rejectUnauthorized: false } // Supabase exige SSL
+      ssl: { rejectUnauthorized: false },
+      connectTimeout: 10000, // espera até 10s
+      family: 4 // 🔹 força IPv4
     });
-    console.log("✅ Conectado ao banco Supabase (PostgreSQL)");
+
+    console.log("✅ Conectado ao banco Supabase (PostgreSQL via IPv4)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
   }
 }
+
 conectarBanco();
+
 
 app.use((req, res, next) => {
   if (!db) return res.status(500).json({ erro: "Banco não conectado." });
