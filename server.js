@@ -55,15 +55,6 @@ app.use((req, res, next) => {
 });
 
 // ============================================================
-// 🟢 Servidor rodando
-// ============================================================
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
-
-
-// ============================================================
 // 🔹 LOGIN
 // ============================================================
 app.post("/api/login", async (req, res) => {
@@ -450,7 +441,12 @@ app.get("/", (req, res) => {
 // ============================================================
 // 🔹 Inicialização
 // ============================================================
-const PORT = 3000;
+
+// Usa variável do Render se existir, senão 3000 localmente
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
+
+
