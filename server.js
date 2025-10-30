@@ -3,10 +3,13 @@
 // ============================================================
 const express = require("express");
 const cors = require("cors");
+const { Pool } = require("pg"); // ✅ Import único e correto
 
 const app = express();
 
-// ✅ Configuração CORS ajustada para Netlify + local
+// ============================================================
+// 🔹 Configuração CORS (Netlify + local)
+// ============================================================
 app.use(cors({
   origin: [
     "https://cheerful-klepon-54ef0e.netlify.app", // front hospedado
@@ -21,8 +24,6 @@ app.use(express.json());
 // ============================================================
 // 🔹 Conexão com o banco Supabase (PostgreSQL via IPv4 e SSL)
 // ============================================================
-const { Pool } = require("pg");
-
 let db;
 
 async function conectarBanco() {
@@ -30,7 +31,7 @@ async function conectarBanco() {
     db = new Pool({
       host: "db.wmfefhqcgkpzujlnsklv.supabase.co",
       user: "postgres",
-      password: "root", // tua senha do Supabase
+      password: "root", // senha configurada no Supabase
       database: "postgres",
       port: 5432,
       ssl: { rejectUnauthorized: false },
@@ -38,7 +39,6 @@ async function conectarBanco() {
       keepAlive: true,
     });
 
-    // Teste de conexão
     await db.query("SELECT NOW()");
     console.log("✅ Conectado ao Supabase (PostgreSQL)");
   } catch (erro) {
@@ -49,11 +49,12 @@ async function conectarBanco() {
 
 conectarBanco();
 
-
+// Middleware para garantir conexão ativa
 app.use((req, res, next) => {
   if (!db) return res.status(500).json({ erro: "Banco não conectado." });
   next();
 });
+
 
 // ============================================================
 // 🔹 LOGIN
