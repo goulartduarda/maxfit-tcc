@@ -25,7 +25,6 @@ app.use(express.json());
 // 🔹 Conexão com o banco Supabase (forçando IPv4)
 // ============================================================
 const dns = require("dns");
-const { Pool } = require("pg");
 
 let db;
 
