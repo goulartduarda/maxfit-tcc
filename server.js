@@ -3,7 +3,7 @@
 // ============================================================
 const express = require("express");
 const cors = require("cors");
-const mysql = require("mysql2/promise");
+const { Pool } = require("pg"); // ✅ driver certo pro Supabase (PostgreSQL)
 
 const app = express();
 
@@ -20,26 +20,25 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o Supabase (forçando IPv4 + SSL)
+// 🔹 Conexão com o Supabase (PostgreSQL com SSL e IPv4)
 // ============================================================
-const mysql = require("mysql2/promise");
-
 let db;
 
 async function conectarBanco() {
   try {
-    db = await mysql.createConnection({
+    db = new Pool({
       host: "db.wmfefhqcgkpzujlnsklv.supabase.co",
       user: "postgres",
-      password: "root", // tua senha do Supabase
+      password: "root", // 🔹 coloca tua senha real do Supabase aqui
       database: "postgres",
       port: 5432,
       ssl: { rejectUnauthorized: false },
-      connectTimeout: 10000, // espera até 10s
-      family: 4 // 🔹 força IPv4
+      connectionTimeoutMillis: 10000, // espera até 10s
     });
 
-    console.log("✅ Conectado ao banco Supabase (PostgreSQL via IPv4)");
+    // Testa a conexão
+    await db.query("SELECT NOW()");
+    console.log("✅ Conectado ao banco Supabase (PostgreSQL)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
@@ -48,10 +47,19 @@ async function conectarBanco() {
 
 conectarBanco();
 
-
+// Middleware pra garantir que o banco esteja acessível nas rotas
 app.use((req, res, next) => {
   if (!db) return res.status(500).json({ erro: "Banco não conectado." });
+  req.db = db;
   next();
+});
+
+// ============================================================
+// 🟢 Servidor rodando
+// ============================================================
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
 
 
