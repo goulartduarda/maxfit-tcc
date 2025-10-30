@@ -22,16 +22,23 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o banco Supabase (PostgreSQL via IPv4 e SSL)
+// 🔹 Conexão com o banco Supabase (forçando IPv4)
 // ============================================================
+const dns = require("dns");
+const { Pool } = require("pg");
+
 let db;
 
 async function conectarBanco() {
   try {
+    // Resolve o IP IPv4 do host
+    const addresses = await dns.promises.lookup("db.wmfefhqcgkpzujlnsklv.supabase.co", { family: 4 });
+    const ipv4Host = addresses.address;
+
     db = new Pool({
-      host: "db.wmfefhqcgkpzujlnsklv.supabase.co",
+      host: ipv4Host, // usa o IP IPv4 direto
       user: "postgres",
-      password: "root", // senha configurada no Supabase
+      password: "root", // tua senha do Supabase
       database: "postgres",
       port: 5432,
       ssl: { rejectUnauthorized: false },
@@ -40,7 +47,7 @@ async function conectarBanco() {
     });
 
     await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase (PostgreSQL)");
+    console.log("✅ Conectado ao Supabase (PostgreSQL via IPv4)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
@@ -48,6 +55,7 @@ async function conectarBanco() {
 }
 
 conectarBanco();
+
 
 // Middleware para garantir conexão ativa
 app.use((req, res, next) => {
@@ -441,14 +449,15 @@ app.get("/", (req, res) => {
 });
 
 // ============================================================
-// 🔹 Inicialização
+// 🔹 Inicialização do servidor
 // ============================================================
 
-// Usa variável do Render se existir, senão 3000 localmente
+// Render define a porta automaticamente via variável de ambiente
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
+
 
 
