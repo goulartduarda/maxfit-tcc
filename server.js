@@ -3,17 +3,19 @@
 // ============================================================
 const express = require("express");
 const cors = require("cors");
-const { Pool } = require("pg"); // ✅ Import único e correto
+const { Pool } = require("pg");
+const dns = require("dns");
+
+// 🔸 Faz o Node priorizar IPv4 (evita tentativas em IPv6 no Render)
+dns.setDefaultResultOrder("ipv4first");
 
 const app = express();
 
-// ============================================================
-// 🔹 Configuração CORS (Netlify + local)
-// ============================================================
+// CORS
 app.use(cors({
   origin: [
-    "https://cheerful-klepon-54ef0e.netlify.app", // front hospedado
-    "http://localhost:5500" // opcional para testes locais
+    "https://cheerful-klepon-54ef0e.netlify.app",
+    "http://localhost:5500"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -21,32 +23,24 @@ app.use(cors({
 
 app.use(express.json());
 
-// ============================================================
-// 🔹 Conexão com o banco Supabase (forçando IPv4)
-// ============================================================
-const dns = require("dns");
-
+// ----------------- Conexão Supabase (PostgreSQL) -----------------
 let db;
 
 async function conectarBanco() {
   try {
-    // Resolve o IP IPv4 do host
-    const addresses = await dns.promises.lookup("db.wmfefhqcgkpzujlnsklv.supabase.co", { family: 4 });
-    const ipv4Host = addresses.address;
-
     db = new Pool({
-      host: ipv4Host, // usa o IP IPv4 direto
+      host: "db.wmfefhqcgkpzujlnsklv.supabase.co", // host do Supabase
       user: "postgres",
-      password: "root", // tua senha do Supabase
+      password: "root",                  // troque pela senha correta
       database: "postgres",
       port: 5432,
-      ssl: { rejectUnauthorized: false },
+      ssl: { rejectUnauthorized: false },         // SSL exigido pelo Supabase
       connectionTimeoutMillis: 10000,
-      keepAlive: true,
+      keepAlive: true
     });
 
     await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase (PostgreSQL via IPv4)");
+    console.log("✅ Conectado ao Supabase (PostgreSQL, IPv4 first)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
@@ -55,13 +49,21 @@ async function conectarBanco() {
 
 conectarBanco();
 
+// health-check opcional (bom pro Render)
+app.get("/health", async (_, res) => {
+  try {
+    const r = await db.query("SELECT 1");
+    res.json({ ok: true, db: r.rowCount === 1 });
+  } catch {
+    res.status(500).json({ ok: false });
+  }
+});
 
-// Middleware para garantir conexão ativa
+// Garante conexão ativa
 app.use((req, res, next) => {
   if (!db) return res.status(500).json({ erro: "Banco não conectado." });
   next();
 });
-
 
 // ============================================================
 // 🔹 LOGIN
@@ -452,11 +454,8 @@ app.get("/", (req, res) => {
 // ============================================================
 
 // Render define a porta automaticamente via variável de ambiente
+// Porta do Render
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
-
+app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
 
 
