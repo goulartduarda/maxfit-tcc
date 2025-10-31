@@ -23,24 +23,28 @@ app.use(cors({
 
 app.use(express.json());
 
-// ----------------- Conexão Supabase (PostgreSQL) -----------------
+// ============================================================
+// 🔹 Conexão com o banco Supabase (Pooler IPv4)
+// ============================================================
+const { Pool } = require("pg");
+
 let db;
 
 async function conectarBanco() {
   try {
     db = new Pool({
-      host: "db.wmfefhqcgkpzujlnsklv.supabase.co", // host do Supabase
+      host: "aws-0-sa-east-1-pooler.supabase.net",
       user: "postgres",
-      password: "root",                  // troque pela senha correta
+      password: "root", // tua senha do Supabase
       database: "postgres",
-      port: 5432,
-      ssl: { rejectUnauthorized: false },         // SSL exigido pelo Supabase
+      port: 6543, // porta do pooler IPv4
+      ssl: { rejectUnauthorized: false },
       connectionTimeoutMillis: 10000,
-      keepAlive: true
+      keepAlive: true,
     });
 
     await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase (PostgreSQL, IPv4 first)");
+    console.log("✅ Conectado ao Supabase (Pooler IPv4)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
@@ -48,6 +52,7 @@ async function conectarBanco() {
 }
 
 conectarBanco();
+
 
 // health-check opcional (bom pro Render)
 app.get("/health", async (_, res) => {
