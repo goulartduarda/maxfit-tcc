@@ -20,16 +20,23 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o banco Supabase (US — compatível com Render)
+// 🔹 Conexão com o banco Supabase (forçando IPv4)
 // ============================================================
+const { Pool } = require("pg");
+const dns = require("dns");
+
 let db;
 
 async function conectarBanco() {
   try {
+    // 🔹 Resolve o IP IPv4 antes de conectar (força IPv4)
+    const { address } = await dns.promises.lookup("db.fwdqwiaznfzpbcfgioqg.supabase.co", { family: 4 });
+    console.log("🌐 Resolved IPv4:", address);
+
     db = new Pool({
-      host: "db.fwdqwiaznfzpbcfgioqg.supabase.co",
+      host: address, // usa o IPv4 direto
       user: "postgres",
-      password: "root", // mesma senha que você definiu no novo Supabase
+      password: "root", // sua senha do Supabase
       database: "postgres",
       port: 5432,
       ssl: { rejectUnauthorized: false },
@@ -38,19 +45,12 @@ async function conectarBanco() {
     });
 
     await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase (US Region)");
+    console.log("✅ Conectado ao Supabase (forçado IPv4)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
   }
 }
-
-conectarBanco();
-
-app.use((req, res, next) => {
-  if (!db) return res.status(500).json({ erro: "Banco não conectado." });
-  next();
-});
 
 // ============================================================
 // 🔹 LOGIN
