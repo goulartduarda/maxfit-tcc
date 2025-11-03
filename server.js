@@ -4,18 +4,14 @@
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
-const dns = require("dns");
-
-// 🔸 Faz o Node priorizar IPv4 (evita tentativas em IPv6 no Render)
-dns.setDefaultResultOrder("ipv4first");
 
 const app = express();
 
-// CORS
+// ✅ Configuração CORS ajustada para Netlify + local
 app.use(cors({
   origin: [
-    "https://cheerful-klepon-54ef0e.netlify.app",
-    "http://localhost:5500"
+    "https://cheerful-klepon-54ef0e.netlify.app", // front hospedado
+    "http://localhost:5500" // opcional para testes locais
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -24,26 +20,25 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o banco Supabase (Pooler IPv4)
+// 🔹 Conexão com o banco Supabase (US — compatível com Render)
 // ============================================================
-
 let db;
 
 async function conectarBanco() {
   try {
     db = new Pool({
-      host: "aws-0-sa-east-1-pooler.supabase.net",
+      host: "db.fwdqwiaznfzpbcfgioqg.supabase.co",
       user: "postgres",
-      password: "root", // tua senha do Supabase
+      password: "root", // mesma senha que você definiu no novo Supabase
       database: "postgres",
-      port: 6543, // porta do pooler IPv4
+      port: 5432,
       ssl: { rejectUnauthorized: false },
       connectionTimeoutMillis: 10000,
       keepAlive: true,
     });
 
     await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase (Pooler IPv4)");
+    console.log("✅ Conectado ao Supabase (US Region)");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
@@ -52,18 +47,6 @@ async function conectarBanco() {
 
 conectarBanco();
 
-
-// health-check opcional (bom pro Render)
-app.get("/health", async (_, res) => {
-  try {
-    const r = await db.query("SELECT 1");
-    res.json({ ok: true, db: r.rowCount === 1 });
-  } catch {
-    res.status(500).json({ ok: false });
-  }
-});
-
-// Garante conexão ativa
 app.use((req, res, next) => {
   if (!db) return res.status(500).json({ erro: "Banco não conectado." });
   next();
@@ -459,7 +442,7 @@ app.get("/", (req, res) => {
 
 // Render define a porta automaticamente via variável de ambiente
 // Porta do Render
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
-
-
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+});
