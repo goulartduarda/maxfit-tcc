@@ -1,9 +1,10 @@
 {
   "name": "maxfit-tcc2",
   "version": "1.0.0",
-  "description": "🏋️ MaxFit - Projeto de TCC II\r O MaxFit é um projeto de aplicativo voltado para a gestão de treinos personalizados em academias, desenvolvido como parte do Trabalho de Conclusão de Curso II do curso de Análise e Desenvolvimento de Sistemas do IFSC.",
-  "main": "index.js",
+  "description": "🏋️ MaxFit - Projeto de TCC II. O MaxFit é um projeto de aplicativo voltado para a gestão de treinos personalizados em academias, desenvolvido como parte do Trabalho de Conclusão de Curso II do curso de Análise e Desenvolvimento de Sistemas do IFSC.",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,8 @@
     "express": "^5.1.0",
     "mysql2": "^3.15.1",
     "pg": "^8.16.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
