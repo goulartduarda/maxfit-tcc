@@ -50,30 +50,41 @@ async function conectarBanco() {
   }
 }
 
-// 🔹 Chama a conexão antes de iniciar o servidor
-await conectarBanco();
-
 // ============================================================
-// 🔹 Rota raiz — confirma API ativa
+// 🔹 Inicialização segura do servidor
 // ============================================================
-app.get("/", (req, res) => {
-  res.send("✅ API MaxFit rodando e conectada ao banco!");
-});
+async function startServer() {
+  await conectarBanco();
 
-// 🔹 Teste de conexão direta
-app.get("/test-db", async (req, res) => {
-  try {
-    const result = await db.query("SELECT NOW()");
-    res.json({
-      status: "✅ Banco conectado com sucesso!",
-      horaServidor: result.rows[0].now,
-      banco: "maxfit-db-us (Supabase)",
-    });
-  } catch (erro) {
-    console.error("Erro no /test-db:", erro);
-    res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
-  }
-});
+  // 🔹 Rota raiz — confirma API ativa
+  app.get("/", (req, res) => {
+    res.send("✅ API MaxFit rodando e conectada ao banco!");
+  });
+
+  // 🔹 Teste de conexão direta
+  app.get("/test-db", async (req, res) => {
+    try {
+      const result = await db.query("SELECT NOW()");
+      res.json({
+        status: "✅ Banco conectado com sucesso!",
+        horaServidor: result.rows[0].now,
+        banco: "maxfit-db-us (Supabase)",
+      });
+    } catch (erro) {
+      console.error("Erro no /test-db:", erro);
+      res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
+    }
+  });
+
+  const PORT = process.env.PORT || 10000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor MaxFit rodando na porta ${PORT}`);
+  });
+}
+
+// 🔹 Executa o servidor
+startServer();
+
 // ============================================================
 // 🔹 Rota de cadastro de usuário
 // ============================================================
