@@ -4,55 +4,37 @@
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
+const dns = require("dns");
 
 const app = express();
 
-// ✅ Configuração CORS ajustada para Netlify + local
+// ============================================================
+// ✅ CORS — libera Netlify + localhost
+// ============================================================
 app.use(cors({
   origin: [
-    "https://cheerful-klepon-54ef0e.netlify.app", // front hospedado
-    "http://localhost:5500" // opcional para testes locais
+    "https://cheerful-klepon-54ef0e.netlify.app",
+    "http://localhost:5500"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
 app.use(express.json());
-// ============================================================
-// 🔹 Rota de teste de conexão com o banco
-// ============================================================
-app.get("/test-db", async (req, res) => {
-  try {
-    const result = await db.query("SELECT NOW()");
-    res.json({
-      status: "✅ Banco conectado com sucesso!",
-      horaServidor: result.rows[0].now,
-      banco: "maxfit-db-us (Supabase)",
-    });
-  } catch (erro) {
-    console.error("Erro no /test-db:", erro);
-    res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
-  }
-});
-
 
 // ============================================================
 // 🔹 Conexão com o banco Supabase (forçando IPv4)
 // ============================================================
-const dns = require("dns");
-
 let db;
 
 async function conectarBanco() {
   try {
-    // 🔹 Resolve o IP IPv4 antes de conectar (força IPv4)
     const { address } = await dns.promises.lookup("db.fwdqwiaznfzpbcfgioqg.supabase.co", { family: 4 });
     console.log("🌐 Resolved IPv4:", address);
 
     db = new Pool({
-      host: address, // usa o IPv4 direto
+      host: address,
       user: "postgres",
-      password: "root", // sua senha do Supabase
+      password: "root", // senha do Supabase
       database: "postgres",
       port: 5432,
       ssl: { rejectUnauthorized: false },
@@ -67,6 +49,74 @@ async function conectarBanco() {
     process.exit(1);
   }
 }
+
+// 🔹 Chama a conexão antes de iniciar o servidor
+await conectarBanco();
+
+// ============================================================
+// 🔹 Rota raiz — confirma API ativa
+// ============================================================
+app.get("/", (req, res) => {
+  res.send("✅ API MaxFit rodando e conectada ao banco!");
+});
+
+// 🔹 Teste de conexão direta
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+    res.json({
+      status: "✅ Banco conectado com sucesso!",
+      horaServidor: result.rows[0].now,
+      banco: "maxfit-db-us (Supabase)",
+    });
+  } catch (erro) {
+    console.error("Erro no /test-db:", erro);
+    res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
+  }
+});
+// ============================================================
+// 🔹 Rota de cadastro de usuário
+// ============================================================
+app.post("/api/cadastro", async (req, res) => {
+  try {
+    const { nome, email, senha, tipo } = req.body;
+
+    if (!nome || !email || !senha || !tipo) {
+      return res.status(400).json({
+        sucesso: false,
+        mensagem: "Campos obrigatórios faltando.",
+      });
+    }
+
+    // Verifica se o e-mail já existe
+    const existe = await db.query("SELECT * FROM usuarios WHERE email = $1", [email]);
+    if (existe.rows.length > 0) {
+      return res.status(409).json({
+        sucesso: false,
+        mensagem: "E-mail já cadastrado.",
+      });
+    }
+
+    // Insere no banco
+    const resultado = await db.query(
+      "INSERT INTO usuarios (nome, email, senha, tipo) VALUES ($1, $2, $3, $4) RETURNING id",
+      [nome, email, senha, tipo]
+    );
+
+    res.status(201).json({
+      sucesso: true,
+      mensagem: "Usuário cadastrado com sucesso!",
+      id: resultado.rows[0].id,
+    });
+
+  } catch (erro) {
+    console.error("Erro no /api/cadastro:", erro);
+    res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro interno no servidor.",
+    });
+  }
+});
 
 // ============================================================
 // 🔹 LOGIN
