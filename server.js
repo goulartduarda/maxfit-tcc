@@ -18,6 +18,23 @@ app.use(cors({
 }));
 
 app.use(express.json());
+// ============================================================
+// 🔹 Rota de teste de conexão com o banco
+// ============================================================
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+    res.json({
+      status: "✅ Banco conectado com sucesso!",
+      horaServidor: result.rows[0].now,
+      banco: "maxfit-db-us (Supabase)",
+    });
+  } catch (erro) {
+    console.error("Erro no /test-db:", erro);
+    res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
+  }
+});
+
 
 // ============================================================
 // 🔹 Conexão com o banco Supabase (forçando IPv4)
