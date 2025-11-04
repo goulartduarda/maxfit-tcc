@@ -90,15 +90,6 @@ app.get("/test-db", async (req, res) => {
 });
 
 // ============================================================
-// 🔹 Sobe o servidor (sempre, mesmo se o DB der erro)
-// ============================================================
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor MaxFit rodando na porta ${PORT}`);
-});
-
-
-// ============================================================
 // 🔹 Rota de cadastro de usuário
 // ============================================================
 app.post("/api/cadastro", async (req, res) => {
