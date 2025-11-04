@@ -1,10 +1,9 @@
 // ============================================================
-//  server.js — API oficial MaxFit 💪
+//  server.js — API oficial MaxFit 💪 (conexão Supabase estável)
 // ============================================================
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
-const dns = require("dns");
 
 const app = express();
 
@@ -22,19 +21,16 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com o banco Supabase (forçando IPv4)
+// 🔹 Conexão direta com o banco Supabase (sem IPv4 forçado)
 // ============================================================
 let db;
 
 async function conectarBanco() {
   try {
-    const { address } = await dns.promises.lookup("db.fwdqwiaznfzpbcfgioqg.supabase.co", { family: 4 });
-    console.log("🌐 Resolved IPv4:", address);
-
     db = new Pool({
-      host: address,
+      host: "db.fwdqwiaznfzpbcfgioqg.supabase.co",
       user: "postgres",
-      password: "root", // senha do Supabase
+      password: "root", // tua senha do Supabase
       database: "postgres",
       port: 5432,
       ssl: { rejectUnauthorized: false },
@@ -43,7 +39,7 @@ async function conectarBanco() {
     });
 
     await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase (forçado IPv4)");
+    console.log("✅ Conectado ao Supabase com sucesso!");
   } catch (erro) {
     console.error("❌ Erro ao conectar ao Supabase:", erro);
     process.exit(1);
@@ -74,11 +70,6 @@ async function startServer() {
       console.error("Erro no /test-db:", erro);
       res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
     }
-  });
-
-  const PORT = process.env.PORT || 10000;
-  app.listen(PORT, () => {
-    console.log(`🚀 Servidor MaxFit rodando na porta ${PORT}`);
   });
 }
 
