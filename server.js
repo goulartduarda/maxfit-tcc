@@ -56,7 +56,7 @@ async function startServer() {
       res.json({
         status: "✅ Banco conectado com sucesso!",
         horaServidor: result.rows[0].now,
-        banco: "maxfit-db-us (Supabase via URL direta)",
+        banco: "postgresql://postgres:root@db.fwdqwiaznfzpbcfgioqg.supabase.co:5432/postgres",
       });
     } catch (erro) {
       console.error("Erro no /test-db:", erro);
