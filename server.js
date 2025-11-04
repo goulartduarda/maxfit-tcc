@@ -9,16 +9,18 @@ const { Pool } = require("pg");
 const app = express();
 
 // ============================================================
-// ✅ CORS — libera Netlify + localhost
+// ✅ CORS — libera front hospedado e localhost
 // ============================================================
 app.use(cors({
   origin: [
-    "https://cheerful-klepon-54ef0e.netlify.app",
-    "http://localhost:5500"
+    "https://cheerful-klepon-54ef0e.netlify.app", // antigo front (opcional)
+    "https://maxfit-tcc.onrender.com",            // 👈 novo front no Render
+    "http://localhost:5500"                       // desenvolvimento local
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 
 // ============================================================
