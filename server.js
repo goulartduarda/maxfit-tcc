@@ -1,5 +1,5 @@
 // ============================================================
-//  server.js — MaxFit API oficial (Render + Supabase/Neon via URL pooler)
+//  server.js — MaxFit API (Render + Supabase/Neon via DATABASE_URL)
 // ============================================================
 require("dotenv").config();
 const express = require("express");
@@ -22,41 +22,58 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com banco via DATABASE_URL (Supabase pooler ou Neon/Netlify DB)
-//    No Render/.env: DATABASE_URL = postgresql://... ?sslmode=require
+// 🔹 Conexão com banco via DATABASE_URL
+//    Pode ser Supabase (pooler) OU esse novo banco Neon do Netlify;
+//    o importante é: DATABASE_URL tem que ser uma URL Postgres válida.
 // ============================================================
 if (!process.env.DATABASE_URL) {
   console.error("❌ Faltando DATABASE_URL no ambiente (.env / Render)");
-  process.exit(1);
+  // NÃO mata o processo, só avisa. As rotas de DB vão falhar, mas o servidor sobe.
 }
 
-console.log("🔐 Usando DATABASE_URL:", process.env.DATABASE_URL.replace(/:[^:@]*@/, ":***@"));
+console.log(
+  "🔐 Usando DATABASE_URL:",
+  process.env.DATABASE_URL
+    ? process.env.DATABASE_URL.replace(/:[^:@]*@/, ":***@")
+    : "(não definida)"
+);
 
-const db = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // necessário para Supabase/Neon em ambientes como Render
-  },
-});
+const db = process.env.DATABASE_URL
+  ? new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false, // Supabase/Neon em provedor externo tipo Render
+      },
+    })
+  : null;
 
-// Teste inicial (só log, não quebra a app se falhar)
-(async () => {
-  try {
-    const result = await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao banco! NOW() =>", result.rows[0].now);
-  } catch (erro) {
-    console.error("⚠️ Erro inicial ao conectar ao banco:", erro.message);
-  }
-})();
+// Apenas loga o resultado, não derruba o servidor se der erro
+if (db) {
+  (async () => {
+    try {
+      const result = await db.query("SELECT NOW()");
+      console.log("✅ Teste de conexão OK! NOW() =>", result.rows[0].now);
+    } catch (erro) {
+      console.error("⚠️ Erro inicial ao conectar ao banco:", erro.message);
+    }
+  })();
+}
 
 // ============================================================
-// 🔹 Rotas básicas de saúde / teste
+// 🔹 Rotas básicas
 // ============================================================
 app.get("/", (req, res) => {
-  res.send("✅ API MaxFit rodando e conectada ao banco!");
+  res.send("✅ API MaxFit rodando (Render). Verificando conexão com banco em /test-db.");
 });
 
 app.get("/test-db", async (req, res) => {
+  if (!db) {
+    return res.status(500).json({
+      status: "❌ Falha ao conectar",
+      erro: "DATABASE_URL não configurada no servidor",
+    });
+  }
+
   try {
     const result = await db.query("SELECT NOW()");
     res.json({
@@ -73,9 +90,12 @@ app.get("/test-db", async (req, res) => {
 });
 
 // ============================================================
-// 🔹 SUAS ROTAS DO MAXFIT AQUI
-//    (use sempre `db.query(...)` dentro delas)
+// 🔹 Sobe o servidor (sempre, mesmo se o DB der erro)
 // ============================================================
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor MaxFit rodando na porta ${PORT}`);
+});
 
 
 // ============================================================
