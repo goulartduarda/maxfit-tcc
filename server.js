@@ -1,7 +1,7 @@
 // ============================================================
-//  server.js — MaxFit API oficial (conexão Supabase via URL pooler)
+//  server.js — MaxFit API oficial (Render + Supabase/Neon via URL pooler)
 // ============================================================
-require("dotenv").config();               // 👈 carrega .env localmente
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
@@ -22,67 +22,61 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================================
-// 🔹 Conexão com Supabase via DATABASE_URL (pooler IPv4)
-//    DATABASE_URL (Render/.env) deve ser algo assim:
-//    postgresql://postgres.fwdqwiaznfzpbcfgioqg:SENHA@aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require
+// 🔹 Conexão com banco via DATABASE_URL (Supabase pooler ou Neon/Netlify DB)
+//    No Render/.env: DATABASE_URL = postgresql://... ?sslmode=require
 // ============================================================
 if (!process.env.DATABASE_URL) {
   console.error("❌ Faltando DATABASE_URL no ambiente (.env / Render)");
   process.exit(1);
 }
 
-let db;
+console.log("🔐 Usando DATABASE_URL:", process.env.DATABASE_URL.replace(/:[^:@]*@/, ":***@"));
 
-async function conectarBanco() {
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // necessário para Supabase/Neon em ambientes como Render
+  },
+});
+
+// Teste inicial (só log, não quebra a app se falhar)
+(async () => {
   try {
-    db = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false }, // Supabase + Render
-    });
-
-    // Teste rápido
-    await db.query("SELECT NOW()");
-    console.log("✅ Conectado ao Supabase com sucesso (pooler)!");
+    const result = await db.query("SELECT NOW()");
+    console.log("✅ Conectado ao banco! NOW() =>", result.rows[0].now);
   } catch (erro) {
-    console.error("❌ Erro ao conectar ao Supabase:", erro);
-    process.exit(1);
+    console.error("⚠️ Erro inicial ao conectar ao banco:", erro.message);
   }
-}
+})();
 
 // ============================================================
-// 🔹 Inicialização segura do servidor
+// 🔹 Rotas básicas de saúde / teste
 // ============================================================
-async function startServer() {
-  await conectarBanco();
+app.get("/", (req, res) => {
+  res.send("✅ API MaxFit rodando e conectada ao banco!");
+});
 
-  app.get("/", (req, res) => {
-    res.send("✅ API MaxFit rodando e conectada ao Supabase (pooler)!");
-  });
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+    res.json({
+      status: "✅ Banco conectado com sucesso!",
+      horaServidor: result.rows[0].now,
+    });
+  } catch (erro) {
+    console.error("Erro no /test-db:", erro);
+    res.status(500).json({
+      status: "❌ Falha ao conectar",
+      erro: erro.message,
+    });
+  }
+});
 
-  // Rota de teste de banco
-  app.get("/test-db", async (req, res) => {
-    try {
-      const result = await db.query("SELECT NOW()");
-      res.json({
-        status: "✅ Banco conectado com sucesso!",
-        horaServidor: result.rows[0].now,
-        // Tiramos a URL fixa antiga que apontava pro host IPv6
-        // Se quiser ver a URL em log, use console.log(process.env.DATABASE_URL)
-      });
-    } catch (erro) {
-      console.error("Erro no /test-db:", erro);
-      res.status(500).json({ status: "❌ Falha ao conectar", erro: erro.message });
-    }
-  });
+// ============================================================
+// 🔹 SUAS ROTAS DO MAXFIT AQUI
+//    (use sempre `db.query(...)` dentro delas)
+// ============================================================
 
-  // 🔻 Aqui continuam TODAS as suas outras rotas (login, treinos etc.)
-  // app.post("/login", async (req, res) => { ... });
-  // app.get("/treinos", async (req, res) => { ... });
-  // ...
-
-}
-
-startServer();
 
 // ============================================================
 // 🔹 Rota de cadastro de usuário
