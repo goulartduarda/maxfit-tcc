@@ -9,12 +9,25 @@ addEventListener('orientationchange', fixVh);
 
 const $ = (id) => document.getElementById(id);
 
+// ===== Config API =====
+const API_BASE_URL = "https://maxfit-backend.onrender.com";
+
 // ===== Estado =====
 let selectedMood = 2; // padrão "neutro"
-const alunoId = localStorage.getItem("current_user_id");
+
+// Recupera usuário logado e ID do aluno
+const usuarioLogado = JSON.parse(localStorage.getItem("usuario_logado") || "null");
+const alunoId = usuarioLogado?.id ?? null;
 
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', () => {
+  // se não tiver usuário em sessão, volta pro login
+  if (!alunoId) {
+    alert("Sessão expirada. Faça login novamente.");
+    window.location.href = "/pages/06-entrar.html";
+    return;
+  }
+
   const foto = localStorage.getItem('usuario_foto');
   if (foto && $('fotoPerfil')) $('fotoPerfil').src = foto;
 
@@ -75,7 +88,7 @@ async function salvarEntrada() {
 
   try {
     const body = {
-      aluno_id: alunoId,
+      aluno_id: alunoId,            // 👈 agora vem do usuario_logado.id
       data,
       treino_executado: treino,
       avaliacao,
@@ -85,7 +98,7 @@ async function salvarEntrada() {
       imagem: img || null
     };
 
-    const resp = await fetch("https://maxfit-backend.onrender.com/api/diarios", {
+    const resp = await fetch(`${API_BASE_URL}/api/diarios`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
@@ -108,7 +121,7 @@ async function renderHistorico() {
   box.innerHTML = `<div class="item"><div class="item-sub">Carregando...</div></div>`;
 
   try {
-    const resp = await fetch(`https://maxfit-backend.onrender.com/api/diarios/${alunoId}`);
+    const resp = await fetch(`${API_BASE_URL}/api/diarios/${alunoId}`);
     if (!resp.ok) throw new Error("Erro ao buscar histórico.");
     const list = await resp.json();
 
