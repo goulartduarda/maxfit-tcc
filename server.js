@@ -140,21 +140,32 @@ app.post("/api/cadastro", async (req, res) => {
 // ============================================================
 app.post("/api/login", async (req, res) => {
   const { email, senha } = req.body;
+
+  if (!email || !senha) {
+    return res
+      .status(400)
+      .json({ mensagem: "E-mail e senha são obrigatórios." });
+  }
+
   try {
-    const [rows] = await db.query(
-      "SELECT id, nome, email, tipo FROM usuarios WHERE email = ? AND senha = ?",
+    // 🔹 Sintaxe correta para Postgres (pg): $1, $2 ...
+    const result = await db.query(
+      "SELECT id, nome, email, tipo FROM usuarios WHERE email = $1 AND senha = $2",
       [email, senha]
     );
 
-    if (rows.length === 0)
-      return res.status(401).json({ mensagem: "E-mail ou senha incorretos." });
+    if (result.rows.length === 0) {
+      return res
+        .status(401)
+        .json({ mensagem: "E-mail ou senha incorretos." });
+    }
 
-    const usuario = rows[0];
+    const usuario = result.rows[0];
     console.log("✅ Login realizado:", usuario);
-    res.json(usuario);
+    return res.json(usuario);
   } catch (err) {
     console.error("Erro no login:", err);
-    res.status(500).json({ mensagem: "Erro interno do servidor." });
+    return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
 });
 
