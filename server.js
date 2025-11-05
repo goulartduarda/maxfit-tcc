@@ -486,39 +486,75 @@ app.post('/api/desafios/:id/participar', async (req, res) => {
 // ==================== DIÁRIO DE TREINO ====================
 
 // Listar entradas do diário de um aluno
-app.get('/api/diarios/:alunoId', async (req, res) => {
+app.get("/api/diarios/:alunoId", async (req, res) => {
   try {
     const { alunoId } = req.params;
-    const [rows] = await db.query(
-      `SELECT * FROM diarios WHERE aluno_id = ? ORDER BY data DESC`,
+
+    if (!alunoId) {
+      return res.status(400).json({ error: "ID do aluno é obrigatório." });
+    }
+
+    const result = await db.query(
+      `SELECT *
+         FROM diarios
+        WHERE aluno_id = $1
+        ORDER BY data DESC`,
       [alunoId]
     );
-    res.json(rows);
+
+    res.json(result.rows);
   } catch (err) {
-    console.error('Erro ao buscar diário:', err);
-    res.status(500).json({ error: 'Erro ao buscar diário' });
+    console.error("Erro ao buscar diário:", err);
+    res.status(500).json({ error: "Erro ao buscar diário" });
   }
 });
 
 // Registrar nova entrada no diário
-app.post('/api/diarios', async (req, res) => {
+app.post("/api/diarios", async (req, res) => {
   try {
-    const { aluno_id, data, treino_executado, avaliacao, objetivo, feito_hoje, como_me_senti, imagem } = req.body;
+    const {
+      aluno_id,
+      data,
+      treino_executado,
+      avaliacao,
+      objetivo,
+      feito_hoje,
+      como_me_senti,
+      imagem,
+    } = req.body;
 
     if (!aluno_id || !data || !treino_executado) {
-      return res.status(400).json({ error: 'Campos obrigatórios ausentes.' });
+      return res
+        .status(400)
+        .json({ error: "Campos obrigatórios ausentes." });
     }
 
-    await db.query(
-      `INSERT INTO diarios (aluno_id, data, treino_executado, avaliacao, objetivo, feito_hoje, como_me_senti, imagem)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [aluno_id, data, treino_executado, avaliacao, objetivo, feito_hoje, como_me_senti, imagem || null]
+    const result = await db.query(
+      `INSERT INTO diarios
+         (aluno_id, data, treino_executado, avaliacao,
+          objetivo, feito_hoje, como_me_senti, imagem)
+       VALUES
+         ($1, $2, $3, $4, $5, $6, $7, $8)
+       RETURNING *`,
+      [
+        aluno_id,
+        data,
+        treino_executado,
+        avaliacao,
+        objetivo,
+        feito_hoje,
+        como_me_senti,
+        imagem || null,
+      ]
     );
 
-    res.json({ message: 'Entrada registrada com sucesso!' });
+    res.status(201).json({
+      message: "Entrada registrada com sucesso!",
+      diario: result.rows[0],
+    });
   } catch (err) {
-    console.error('Erro ao registrar entrada:', err);
-    res.status(500).json({ error: 'Erro ao registrar entrada' });
+    console.error("Erro ao registrar entrada:", err);
+    res.status(500).json({ error: "Erro ao registrar entrada" });
   }
 });
 
